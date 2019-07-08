@@ -5,6 +5,7 @@ const firebase = require('firebase-admin')
 const engines = require(`consolidate`);
 const mail = require('nodemailer')
 const path = require('path');
+require('dotenv').config()
 
 
 const app = express();
@@ -14,18 +15,18 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+const cf = {
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    databaseURL : process.env.databaseURL,
+    projectId : process.env.projectId,
+    storageBucket : process.env.storageBucket,
+    messagingSenderId : process.env.messagingSenderId,
+    appId : process.env.appId
+}
 
-var firebaseConfig = {
-    apiKey: "AIzaSyDJEeiSWAfbwI9dbqAK0vBKGq8TEZ5IfbI",
-    authDomain: "iconproject-f66b2.firebaseapp.com",
-    databaseURL: "https://iconproject-f66b2.firebaseio.com",
-    projectId: "iconproject-f66b2",
-    storageBucket: "iconproject-f66b2.appspot.com",
-    messagingSenderId: "852622610852",
-    appId: "1:852622610852:web:1f26111fd604ad5b"
-};
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(cf);
 
 const db = firebase.firestore()
 
@@ -34,11 +35,6 @@ app.engine('hbs', engines.handlebars);
 app.set('views', `./views`);
 app.set('view engine', `hbs`);
 
-app.get('/home', (req, res) => {
-    console.log(req.body.username);
-
-    res.render('home')
-})
 
 // app.post('/collection', (req, res) => {
 //     db.collection("users").add({
@@ -74,71 +70,62 @@ app.post('/sendEmail', (req, res) => {
     var data = req.body
     var email = data.email
     console.log(data.uid);
+    console.log('send email');
+    console.log(process.env.pass);
     
 
-    let transporter = nodemailer.createTransport({
+    var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
-            type: 'OAuth2',
-            user: email
-        }
-    });
-    
-    transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
-        let accessToken = userTokens[user];
-        if(!accessToken){
-            return callback(new Error('Unknown user'));
-        }else{
-            return callback(null, accessToken);
+            type: 'login',
+            user: 'iconplusdps@gmail.com',
+            pass: '1c0nplusdenpasar'
+
         }
     });
 
     var mailOptions = {
-        from: email,
+        from: 'bilaarta@gmail.com',
         to: 'bilaartawirawan@gmail.com',
         subject: 'Sending Email using Node.js',
         text: 'That was easy!'
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
+            console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
-      }); 
+    })
 })
-
-
-
 
 
 //================SEND EMAIL========================
 
 app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-
+    
     res.render('test')
 })
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
-    res.render('home')
+    res.render('dasboard')
 })
 
 
 app.get('/', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-    res.render('login.hbs')
+    
+    res.render('login.hbs', {
+        data : cf
+    })
 })
 
-// app.get('/', (req,res) => {
-//     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-//     res.send(`${Date.now()}`)
-// })
 
 app.get(`*`, (req, res) => {
     // res.set('Cache-Control', `public, max-age=300 s-maxage=600`);

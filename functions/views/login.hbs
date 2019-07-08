@@ -39,19 +39,19 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
     <script>
+
         var firebaseConfig = {
-            apiKey: "AIzaSyDJEeiSWAfbwI9dbqAK0vBKGq8TEZ5IfbI",
-            authDomain: "iconproject-f66b2.firebaseapp.com",
-            databaseURL: "https://iconproject-f66b2.firebaseio.com",
-            projectId: "iconproject-f66b2",
-            storageBucket: "iconproject-f66b2.appspot.com",
-            messagingSenderId: "852622610852",
-            appId: "1:852622610852:web:1f26111fd604ad5b"
+            apiKey: "{{data.apiKey}}",
+            authDomain: "{{data.authDomain}}",
+            databaseURL: "{{data.databaseURL}}",
+            projectId: "{{data.projectId}}",
+            storageBucket: "{{data.storageBucket}}",
+            messagingSenderId: "{{data.messagingSenderId}}",
+            appId: "{{data.appId}}"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         var name = ' ';
-        
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // User is signed in.
@@ -93,7 +93,7 @@
             },
             // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
             signInFlow: 'popup',
-            signInSuccessUrl: window.location.href +"home",
+            signInSuccessUrl: window.location.href +"/home",
             signInOptions: [
                 // Leave the lines as is for the providers you want to offer your users.
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,

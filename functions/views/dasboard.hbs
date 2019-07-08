@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body {
+            background-color: #f1f2f6
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <ul class="nav nav-black nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">PTL</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Admin Aktivasi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Admin Aset</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center"><b>DATA SO</b></h1>
+                    </div>
+                </div>
+                <hr>
+                <table id="example" class="display" style="width:100%">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#dataPOP"
+                        style="margin-bottom: 12px">TAMBAH DATA</button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="dataPOP">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">TAMBAH DATA SO</h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="/action_page.php" class="was-validated">
+                                        <div class="form-group">
+                                            <label for="uname">No SO :</label>
+                                            <input type="text" class="form-control" id="uname" placeholder=""
+                                                name="uname" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Nama SO :</label>
+                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">No PS :</label>
+                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">No IO :</label>
+                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Alamat :</label>
+                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <thead>
+                        <tr>
+                            <th>No SO</th>
+                            <th>Nama SO</th>
+                            <th>No PS</th>
+                            <th>No IO</th>
+                            <th>Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>No SO</th>
+                            <th>Nama SO</th>
+                            <th>No PS</th>
+                            <th>No IO</th>
+                            <th>Alamat</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="menu1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center"><b>DATA ASET</b></h1>
+                    </div>
+                </div>
+                <hr>
+                <table id="tableAset" class="display" style="width:100%">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#dataAset"
+                        style="margin-bottom: 12px">TAMBAH DATA</button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="dataAset">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">TAMBAH DATA ASET</h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="/action_page.php" class="was-validated">
+                                        <div class="form-group">
+                                            <label for="uname">Nama POP :</label>
+                                            <input type="text" class="form-control" id="uname" placeholder=""
+                                                name="uname" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Keterangan :</label>
+                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(() => {
+                $('#example, #tableAset, #tablePelanggan, #tablePerangkat, #tablePLT').DataTable();
+            })
+        </script>
+
+</body>
+
+</html>

@@ -36,13 +36,13 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
     <script>
         var firebaseConfig = {
-            apiKey: "AIzaSyDJEeiSWAfbwI9dbqAK0vBKGq8TEZ5IfbI",
-            authDomain: "iconproject-f66b2.firebaseapp.com",
-            databaseURL: "https://iconproject-f66b2.firebaseio.com",
-            projectId: "iconproject-f66b2",
-            storageBucket: "iconproject-f66b2.appspot.com",
-            messagingSenderId: "852622610852",
-            appId: "1:852622610852:web:1f26111fd604ad5b"
+            apiKey: "`{{data.apiKey}}`",
+            authDomain: "{{data.authDomain}}`",
+            databaseURL: "{{data.databaseURL}}`",
+            projectId: "{{data.projectId}}`",
+            storageBucket: "{{data.storageBucket}}`",
+            messagingSenderId: "{{data.messagingSenderId}}`",
+            appId: "{{data.appId}}`"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
