@@ -56,11 +56,11 @@
                 </div>
                 <hr>
                 <table id="example" class="display" style="width:100%">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#dataPOP"
+                    <button class="btn btn-success" data-toggle="modal" data-target="#dataSo"
                         style="margin-bottom: 12px">TAMBAH DATA</button>
 
                     <!-- The Modal -->
-                    <div class="modal fade bd-example-modal-lg" id="dataPOP">
+                    <div class="modal fade bd-example-modal-lg" id="dataSo">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
 
@@ -73,47 +73,46 @@
                                 <!-- Modal body -->
                                 <div class="modal-body">
 
-                                    <form action="/action_page.php" class="was-validated">
+                                    <form class="was-validated" method="POST">
                                         <div class="form-group">
-                                            <label for="uname">No SO :</label>
-                                            <input type="text" class="form-control" id="uname" placeholder=""
-                                                name="uname" required>
-                                            <div class="valid-feedback">Valid.</div>
-                                            <div class="invalid-feedback">Please fill out this field.</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pwd">Nama SO :</label>
-                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                            <label for="noSo">No SO :</label>
+                                            <input type="text" class="form-control" id="noSo" placeholder="" name="noSo"
                                                 required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pwd">No PS :</label>
-                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                            <label>Nama SO :</label>
+                                            <input type="text" class="form-control" id="namaSo" placeholder=""
+                                                name="namaSo" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="noPs">No PS :</label>
+                                            <input type="text" class="form-control" id="noPs" placeholder="" name="noPs"
                                                 required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pwd">No IO :</label>
-                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
+                                            <label for="noIo">No IO :</label>
+                                            <input type="text" class="form-control" id="noIo" placeholder="" name="noIo"
                                                 required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pwd">Alamat :</label>
-                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
-                                                required>
+                                            <label for="alamat">Alamat :</label>
+                                            <input type="text" class="form-control" id="alamat" placeholder=""
+                                                name="alamat" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                 </div>
-
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" id="btnSo" class="btn btn-primary">Submit</button>
                                     </form>
                                 </div>
 
@@ -131,7 +130,13 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        {{#each data}}
+                            <td>{{noSo}}</td>
+                            <td>{{namaSo}}</td>
+                            <td>{{noPs}}</td>
+                            <td>{{noIo}}</td>
+                            <td>{{alamat}}</td>
+                        {{/each}}
                     </tbody>
                     <tfoot>
                         <tr>
@@ -169,7 +174,7 @@
                                 <!-- Modal body -->
                                 <div class="modal-body">
 
-                                    <form action="/action_page.php" class="was-validated">
+                                    <form action="/action_page.php" class="was-validated" method="POST">
                                         <div class="form-group">
                                             <label for="uname">Nama POP :</label>
                                             <input type="text" class="form-control" id="uname" placeholder=""
@@ -222,9 +227,73 @@
             </div>
         </div>
 
+
+        <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+
         <script>
             $(document).ready(() => {
+                var firebaseConfig = {
+                    apiKey: "{{dataFb.apiKey}}",
+                    authDomain: "{{dataFb.authDomain}}",
+                    databaseURL: "{{dataFb.databaseURL}}",
+                    projectId: "{{dataFb.projectId}}",
+                    storageBucket: "{{dataFb.storageBucket}}",
+                    messagingSenderId: "{{dataFb.messagingSenderId}}",
+                    appId: "{{dataFb.appId}}"
+                };
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const db = firebase.firestore()
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // User is signed in.
+                        var displayName = user.displayName;
+                        var email = user.email;
+                        var emailVerified = user.emailVerified;
+                        var photoURL = user.photoURL;
+                        var isAnonymous = user.isAnonymous;
+                        var uid = user.uid;
+                        var providerData = user.providerData;
+                        $('#username').val(displayName);
+                        name = displayName;
+                        console.log(name)
+                        console.log(user.displayName)
+                        console.log('login state change')
+
+                    } else {
+                        console.log(' logout state change')
+                    }
+                });
+
                 $('#example, #tableAset, #tablePelanggan, #tablePerangkat, #tablePLT').DataTable();
+
+                $('#btnSo').on('click', () => {
+                    var noSo = document.getElementById('noSo').value;
+                    var namaSo = $('#namaSo').val();
+                    var noPs = $('#noPs').val();
+                    var noIo = $('#noIo').val()
+                    var alamat = $('#alamat').val()
+
+                    var data = db.collection("Data SO").doc()
+                    data.set({
+                            noSo    : noSo,
+                            namaSo  : namaSo,
+                            noIo    : noIo,
+                            noPs    : noPs,
+                            alamat  : alamat
+                    })
+                        .then(function () {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function (error) {
+                            console.error("Error writing document: ", error);
+                        });
+
+                })
             })
         </script>
 

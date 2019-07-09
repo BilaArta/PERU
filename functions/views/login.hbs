@@ -21,6 +21,12 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 
+    <style>
+        body {
+            background-color: #f1f2f6
+        }
+    </style>
+
 </head>
 
 <body>
@@ -28,9 +34,12 @@
 
     <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
-    <h1 id="username"></h1>
-    <div id="firebaseui-auth-container"></div>
-    <div id="loader">Loading...</div>
+    <div style="margin-top:15%">
+
+        <h1 id="username"></h1>
+        <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
+    </div>
 
 
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
@@ -39,15 +48,14 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
     <script>
-
         var firebaseConfig = {
-            apiKey: "{{data.apiKey}}",
-            authDomain: "{{data.authDomain}}",
-            databaseURL: "{{data.databaseURL}}",
-            projectId: "{{data.projectId}}",
-            storageBucket: "{{data.storageBucket}}",
-            messagingSenderId: "{{data.messagingSenderId}}",
-            appId: "{{data.appId}}"
+            apiKey: "{{dataFb.apiKey}}",
+            authDomain: "{{dataFb.authDomain}}",
+            databaseURL: "{{dataFb.databaseURL}}",
+            projectId: "{{dataFb.projectId}}",
+            storageBucket: "{{dataFb.storageBucket}}",
+            messagingSenderId: "{{dataFb.messagingSenderId}}",
+            appId: "{{dataFb.appId}}"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -63,7 +71,7 @@
                 var uid = user.uid;
                 var providerData = user.providerData;
                 $('#username').val(displayName);
-                name = displayName; 
+                name = displayName;
                 console.log(name)
                 console.log(user.displayName)
                 console.log('login state change')
@@ -93,7 +101,7 @@
             },
             // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
             signInFlow: 'popup',
-            signInSuccessUrl: window.location.href +"/home",
+            signInSuccessUrl: window.location.href + "/home",
             signInOptions: [
                 // Leave the lines as is for the providers you want to offer your users.
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -108,9 +116,6 @@
 
         // The start method will wait until the DOM is loaded.
         ui.start('#firebaseui-auth-container', uiConfig);
-
-
-
     </script>
 </body>
 

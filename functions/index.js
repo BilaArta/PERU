@@ -103,7 +103,21 @@ app.post('/sendEmail', (req, res) => {
 })
 
 
+
 //================SEND EMAIL========================
+
+//================input data========================
+app.post('/addSo', (req,res) => {
+    var data = req.body
+    console.log(data);
+    res.render('dasboard', {
+        title : 'dataSO',
+        data : data
+    })
+})
+
+
+//================input data========================
 
 app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
@@ -113,8 +127,24 @@ app.get(`/test`, (req, res) => {
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
+    
+    let citiesRef = db.collection('Data So');
+    let allCities = citiesRef.get()
+    .then(snapshot => {
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+      var data = doc.data()
+      res.render('dasboard', {
+        dataFb: cf,
+        data : data
+    })
+    });
+  })
+  .catch(err => {
+    console.log('Error getting documents', err);
+  });
 
-    res.render('dasboard')
+
 })
 
 
@@ -122,7 +152,7 @@ app.get('/', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
     
     res.render('login.hbs', {
-        data : cf
+        dataFb : cf
     })
 })
 
