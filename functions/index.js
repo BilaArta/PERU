@@ -127,23 +127,9 @@ app.get(`/test`, (req, res) => {
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-    
-    let citiesRef = db.collection('Data So');
-    let allCities = citiesRef.get()
-    .then(snapshot => {
-    snapshot.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
-      var data = doc.data()
-      res.render('dasboard', {
-        dataFb: cf,
-        data : data
+    res.render('dasboard', {
+        dataFb: cf
     })
-    });
-  })
-  .catch(err => {
-    console.log('Error getting documents', err);
-  });
-
 
 })
 

@@ -130,13 +130,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each data}}
-                            <td>{{noSo}}</td>
-                            <td>{{namaSo}}</td>
-                            <td>{{noPs}}</td>
-                            <td>{{noIo}}</td>
-                            <td>{{alamat}}</td>
-                        {{/each}}
+                        <tr id="listDataSo">
+
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -235,6 +231,28 @@
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
 
         <script>
+            const listDataSo = document.querySelector('#listDataSo');
+
+
+            function getDataSo(doc){
+                let namaSo = document.createElement('td');
+                let noSo = document.createElement('td');
+                let noPs = document.createElement('td');
+                let noIs = document.createElement('td');
+                let alamat = document.createElement('td');
+
+                noSo.textContent = doc.data().noSo;
+                namaSo.textContent = doc.data().namaSo;
+                noPs.textContent = doc.data().noPs;
+                noIo.textContent = doc.data().noId;
+                alamat.textContent = doc.data().alamat;
+
+                listDataSo.appendChild(noSo);
+                listDataSo.appendChild(namaSo);
+                listDataSo.appendChild(noPs);
+                listDataSo.appendChild(noIo);
+                listDataSo.appendChild(alamat);
+            }
             $(document).ready(() => {
                 var firebaseConfig = {
                     apiKey: "{{dataFb.apiKey}}",
@@ -269,6 +287,16 @@
                     }
                 });
 
+                //Retrieving Data
+
+                db.collection("Data SO").get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        // doc.data() is never undefined for query doc snapshots
+                        getDataSo(doc)
+
+                    });
+                });
+
                 $('#example, #tableAset, #tablePelanggan, #tablePerangkat, #tablePLT').DataTable();
 
                 $('#btnSo').on('click', () => {
@@ -280,12 +308,12 @@
 
                     var data = db.collection("Data SO").doc()
                     data.set({
-                            noSo    : noSo,
-                            namaSo  : namaSo,
-                            noIo    : noIo,
-                            noPs    : noPs,
-                            alamat  : alamat
-                    })
+                            noSo: noSo,
+                            namaSo: namaSo,
+                            noIo: noIo,
+                            noPs: noPs,
+                            alamat: alamat
+                        })
                         .then(function () {
                             console.log("Document successfully written!");
                         })
