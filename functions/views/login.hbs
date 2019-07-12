@@ -59,7 +59,7 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        var name = ' ';
+        firebase.auth().signOut()
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // User is signed in.
@@ -75,7 +75,7 @@
                 console.log(name)
                 console.log(user.displayName)
                 console.log('login state change')
-
+            
             } else {
                 console.log(' logout state change')
             }

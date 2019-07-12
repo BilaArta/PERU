@@ -1,0 +1,154 @@
+[debug] [2019-07-11T05:19:01.979Z] ----------------------------------------------------------------------
+[debug] [2019-07-11T05:19:01.982Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Bil\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
+[debug] [2019-07-11T05:19:01.983Z] CLI Version:   7.0.2
+[debug] [2019-07-11T05:19:01.983Z] Platform:      win32
+[debug] [2019-07-11T05:19:01.983Z] Node Version:  v10.16.0
+[debug] [2019-07-11T05:19:01.985Z] Time:          Wed Jul 10 2019 22:19:01 GMT-0700 (Pacific Daylight Time)
+[debug] [2019-07-11T05:19:01.986Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-11T05:19:01.998Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-11T05:19:01.999Z] > authorizing via signed-in user
+[debug] [2019-07-11T05:19:01.999Z] [iam] checking project iconproject-f66b2 for permissions ["firebase.projects.get"]
+[debug] [2019-07-11T05:19:02.001Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2:testIamPermissions  
+
+[debug] [2019-07-11T05:19:03.351Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-11T05:19:03.355Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2  
+ 
+[debug] [2019-07-11T05:19:04.644Z] <<< HTTP RESPONSE 200
+[warn] !  Your requested "node" version "8" doesn't match your global version "10"
+[debug] [2019-07-11T05:19:04.918Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/852622610852:getServerAppConfig  
+ 
+[debug] [2019-07-11T05:19:05.788Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5000
+[info] i  functions: Watching "C:\Users\Bil\Documents\Firebase\PERU\functions" for Cloud Functions...
+[debug] [2019-07-11T05:19:06.713Z] Functions runtime initialized.
+[debug] [2019-07-11T05:19:06.714Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:19:12.750Z] firebase-admin has been stubbed.
+[info] i  functions: HTTP trigger initialized at http://localhost:5000/iconproject-f66b2/us-central1/App
+[debug] [2019-07-11T05:22:00.505Z] ----------------------------------------------------------------------
+[debug] [2019-07-11T05:22:00.508Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Bil\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
+[debug] [2019-07-11T05:22:00.508Z] CLI Version:   7.0.2
+[debug] [2019-07-11T05:22:00.508Z] Platform:      win32
+[debug] [2019-07-11T05:22:00.508Z] Node Version:  v10.16.0
+[debug] [2019-07-11T05:22:00.510Z] Time:          Wed Jul 10 2019 22:22:00 GMT-0700 (Pacific Daylight Time)
+[debug] [2019-07-11T05:22:00.510Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-11T05:22:00.568Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-11T05:22:00.569Z] > authorizing via signed-in user
+[debug] [2019-07-11T05:22:00.569Z] [iam] checking project iconproject-f66b2 for permissions ["firebase.projects.get"]
+[debug] [2019-07-11T05:22:00.571Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2:testIamPermissions  
+
+[debug] [2019-07-11T05:22:01.916Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-11T05:22:01.919Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2  
+ 
+[debug] [2019-07-11T05:22:03.188Z] <<< HTTP RESPONSE 200
+[warn] !  Your requested "node" version "8" doesn't match your global version "10"
+[debug] [2019-07-11T05:22:03.387Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/852622610852:getServerAppConfig  
+ 
+[debug] [2019-07-11T05:22:03.867Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5000
+[info] i  functions: Watching "C:\Users\Bil\Documents\Firebase\PERU\functions" for Cloud Functions...
+[debug] [2019-07-11T05:22:04.677Z] Functions runtime initialized.
+[debug] [2019-07-11T05:22:04.678Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:22:05.111Z] firebase-admin has been stubbed.
+[info] i  functions: HTTP trigger initialized at http://localhost:5000/iconproject-f66b2/us-central1/App
+[debug] [2019-07-11T05:23:15.580Z] Accepted request GET /iconproject-f66b2/us-central1/App --> App
+[debug] [2019-07-11T05:23:17.873Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:23:17.875Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:23:18.004Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:23:18.901Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:23:18.902Z] 
+[debug] [2019-07-11T05:23:18.902Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:23:18.910Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\1632"}
+[debug] [2019-07-11T05:23:18.915Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\1632"}
+[debug] [2019-07-11T05:23:18.925Z] Ephemeral server used!
+[debug] [2019-07-11T05:23:18.925Z] Bodyundefined
+[debug] [2019-07-11T05:23:18.933Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:24:08.612Z] Accepted request GET /iconproject-f66b2/us-central1/App --> App
+[debug] [2019-07-11T05:24:09.336Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:24:09.337Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:24:09.451Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:24:09.895Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:24:09.895Z] 
+[debug] [2019-07-11T05:24:09.895Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:24:09.903Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\12168"}
+[debug] [2019-07-11T05:24:09.904Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\12168"}
+[debug] [2019-07-11T05:24:09.913Z] Ephemeral server used!
+[debug] [2019-07-11T05:24:09.913Z] Bodyundefined
+[debug] [2019-07-11T05:24:09.918Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:24:23.879Z] Accepted request GET /iconproject-f66b2/us-central1/App/home --> App
+[debug] [2019-07-11T05:24:24.649Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:24:24.650Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:24:24.775Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:24:25.271Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:24:25.271Z] 
+[debug] [2019-07-11T05:24:25.271Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:24:25.281Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\12780"}
+[debug] [2019-07-11T05:24:25.282Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\12780"}
+[debug] [2019-07-11T05:24:25.290Z] Ephemeral server used!
+[debug] [2019-07-11T05:24:25.291Z] Bodyundefined
+[debug] [2019-07-11T05:24:25.297Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:26:04.751Z] File C:\Users\Bil\Documents\Firebase\PERU\functions\views\dasboard.hbs changed, reloading triggers
+[debug] [2019-07-11T05:26:06.421Z] Functions runtime initialized.
+[debug] [2019-07-11T05:26:06.422Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:26:06.548Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:26:14.780Z] Accepted request GET /iconproject-f66b2/us-central1/App/home --> App
+[debug] [2019-07-11T05:26:15.740Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:26:15.742Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:26:15.905Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:26:16.398Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:26:16.398Z] 
+[debug] [2019-07-11T05:26:16.398Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:26:16.409Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\3716"}
+[debug] [2019-07-11T05:26:16.411Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\3716"}
+[debug] [2019-07-11T05:26:16.420Z] Ephemeral server used!
+[debug] [2019-07-11T05:26:16.421Z] Bodyundefined
+[debug] [2019-07-11T05:26:16.427Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:27:23.504Z] File C:\Users\Bil\Documents\Firebase\PERU\functions\views\dasboard.hbs changed, reloading triggers
+[debug] [2019-07-11T05:27:34.156Z] Accepted request GET /iconproject-f66b2/us-central1/App/home --> App
+[debug] [2019-07-11T05:27:34.882Z] Functions runtime initialized.
+[debug] [2019-07-11T05:27:34.884Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:27:35.003Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:27:35.244Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:27:35.248Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:27:35.403Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:27:35.973Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:27:35.973Z] 
+[debug] [2019-07-11T05:27:35.973Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:27:35.986Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\13048"}
+[debug] [2019-07-11T05:27:35.988Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\13048"}
+[debug] [2019-07-11T05:27:36.000Z] Ephemeral server used!
+[debug] [2019-07-11T05:27:36.001Z] Bodyundefined
+[debug] [2019-07-11T05:27:36.012Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:27:42.623Z] File C:\Users\Bil\Documents\Firebase\PERU\functions\views\dasboard.hbs changed, reloading triggers
+[debug] [2019-07-11T05:27:44.428Z] Functions runtime initialized.
+[debug] [2019-07-11T05:27:44.430Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:27:44.542Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:27:44.831Z] Accepted request GET /iconproject-f66b2/us-central1/App/home --> App
+[debug] [2019-07-11T05:27:45.819Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "App"
+[debug] [2019-07-11T05:27:45.821Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:27:45.976Z] firebase-admin has been stubbed.
+[debug] [2019-07-11T05:27:46.461Z] Trigger "App" has been found, beginning invocation!
+[debug] [2019-07-11T05:27:46.462Z] 
+[debug] [2019-07-11T05:27:46.462Z] Running App in mode HTTPS
+[debug] [2019-07-11T05:27:46.470Z] {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\6812"}
+[debug] [2019-07-11T05:27:46.471Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\Users\\Bil\\Documents\\Firebase\\PERU\\functions\\6812"}
+[debug] [2019-07-11T05:27:46.479Z] Ephemeral server used!
+[debug] [2019-07-11T05:27:46.480Z] Bodyundefined
+[debug] [2019-07-11T05:27:46.486Z] Ephemeral server survived.
+[info] i  functions: Finished "App" in ~1s
+[debug] [2019-07-11T05:28:53.479Z] File C:\Users\Bil\Documents\Firebase\PERU\functions\views\dasboard.hbs changed, reloading triggers
+[debug] [2019-07-11T05:28:55.440Z] Functions runtime initialized.
+[debug] [2019-07-11T05:28:55.441Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-11T05:28:55.586Z] firebase-admin has been stubbed.

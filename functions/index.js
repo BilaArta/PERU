@@ -18,16 +18,16 @@ app.use(bodyParser.urlencoded({
 const cf = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
-    databaseURL : process.env.databaseURL,
-    projectId : process.env.projectId,
-    storageBucket : process.env.storageBucket,
-    messagingSenderId : process.env.messagingSenderId,
-    appId : process.env.appId
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId
 }
 
 // Initialize Firebase
 firebase.initializeApp(cf);
-
+const auth = firebase.auth()
 const db = firebase.firestore()
 
 app.engine('hbs', engines.handlebars);
@@ -72,7 +72,7 @@ app.post('/sendEmail', (req, res) => {
     console.log(data.uid);
     console.log('send email');
     console.log(process.env.pass);
-    
+
 
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -107,12 +107,12 @@ app.post('/sendEmail', (req, res) => {
 //================SEND EMAIL========================
 
 //================input data========================
-app.post('/addSo', (req,res) => {
+app.post('/addSo', (req, res) => {
     var data = req.body
     console.log(data);
     res.render('dasboard', {
-        title : 'dataSO',
-        data : data
+        title: 'dataSO',
+        data: data
     })
 })
 
@@ -121,30 +121,24 @@ app.post('/addSo', (req,res) => {
 
 app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-    
+
     res.render('test')
 })
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-    
-    let citiesRef = db.collection('Data So');
-    let allCities = citiesRef.get()
-    .then(snapshot => {
-    snapshot.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
-      var data = doc.data()
-      res.render('dasboard', {
-        dataFb: cf,
-        data : data
+
+    res.render('dasboard', {
+        dataFb: cf
     })
-    });
-  })
-  .catch(err => {
-    console.log('Error getting documents', err);
-  });
+})
 
+app.get(`/app/home`, (req, res) => {
+    res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
+    res.render('dasboard', {
+        dataFb: cf
+    })
 })
 
 
@@ -152,7 +146,7 @@ app.get('/', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
     
     res.render('login.hbs', {
-        dataFb : cf
+        dataFb: cf
     })
 })
 
@@ -164,4 +158,4 @@ app.get(`*`, (req, res) => {
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-exports.App = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);
