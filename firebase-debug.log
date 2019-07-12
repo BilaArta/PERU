@@ -1,0 +1,42 @@
+[debug] [2019-07-12T02:24:41.179Z] ----------------------------------------------------------------------
+[debug] [2019-07-12T02:24:41.228Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Bil\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
+[debug] [2019-07-12T02:24:41.229Z] CLI Version:   7.0.2
+[debug] [2019-07-12T02:24:41.229Z] Platform:      win32
+[debug] [2019-07-12T02:24:41.229Z] Node Version:  v10.16.0
+[debug] [2019-07-12T02:24:41.314Z] Time:          Thu Jul 11 2019 19:24:41 GMT-0700 (Pacific Daylight Time)
+[debug] [2019-07-12T02:24:41.314Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-12T02:24:41.482Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-12T02:24:41.483Z] > authorizing via signed-in user
+[debug] [2019-07-12T02:24:41.483Z] [iam] checking project iconproject-f66b2 for permissions ["firebase.projects.get"]
+[debug] [2019-07-12T02:24:41.485Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2:testIamPermissions  
+
+[debug] [2019-07-12T02:24:43.516Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-12T02:24:43.520Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/iconproject-f66b2  
+ 
+[debug] [2019-07-12T02:24:44.842Z] <<< HTTP RESPONSE 200
+[warn] !  Your requested "node" version "8" doesn't match your global version "10"
+[debug] [2019-07-12T02:24:44.925Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/852622610852:getServerAppConfig  
+ 
+[debug] [2019-07-12T02:24:45.335Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5000
+[info] i  functions: Watching "C:\Users\Bil\Documents\Firebase\PERU\functions" for Cloud Functions...
+[debug] [2019-07-12T02:24:46.085Z] Functions runtime initialized.
+[debug] [2019-07-12T02:24:46.085Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-12T02:24:47.466Z] firebase-admin has been stubbed.
+[warn] !  C:\Users\Bil\Documents\Firebase\PERU\functions\index.js:130
+<<<<<<< HEAD
+^^
+
+SyntaxError: Unexpected token <<
+    at Module._compile (internal/modules/cjs/loader.js:721:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:690:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at C:\Users\Bil\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:582:33
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Bil\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:4:58)
+[warn] !  We were unable to load your functions code. (see above)

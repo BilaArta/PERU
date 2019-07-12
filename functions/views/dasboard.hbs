@@ -131,15 +131,8 @@
                             <th>Alamat</th>
                         </tr>
                     </thead>
-<<<<<<< HEAD
                     <tbody id="listDataSo">
 
-=======
-                    <tbody>
-                        <tr id="listDataSo">
-
-                        </tr>
->>>>>>> 804e303f982a45915347f7e48de0b109d39fd599
                     </tbody>
                     <tfoot>
                         <tr>
@@ -240,7 +233,6 @@
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
 
         <script>
-<<<<<<< HEAD
             var firebaseConfig = {
                 apiKey: "{{dataFb.apiKey}}",
                 authDomain: "{{dataFb.authDomain}}",
@@ -283,29 +275,6 @@
                         "searching": true
                     });
                 })
-=======
-            const listDataSo = document.querySelector('#listDataSo');
-
-
-            function getDataSo(doc){
-                let namaSo = document.createElement('td');
-                let noSo = document.createElement('td');
-                let noPs = document.createElement('td');
-                let noIs = document.createElement('td');
-                let alamat = document.createElement('td');
-
-                noSo.textContent = doc.data().noSo;
-                namaSo.textContent = doc.data().namaSo;
-                noPs.textContent = doc.data().noPs;
-                noIo.textContent = doc.data().noId;
-                alamat.textContent = doc.data().alamat;
-
-                listDataSo.appendChild(noSo);
-                listDataSo.appendChild(namaSo);
-                listDataSo.appendChild(noPs);
-                listDataSo.appendChild(noIo);
-                listDataSo.appendChild(alamat);
->>>>>>> 804e303f982a45915347f7e48de0b109d39fd599
             }
             $(document).ready(() => {
                 //get data table
@@ -331,20 +300,6 @@
                     }
                 });
 
-<<<<<<< HEAD
-=======
-                //Retrieving Data
-
-                db.collection("Data SO").get().then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        // doc.data() is never undefined for query doc snapshots
-                        getDataSo(doc)
-
-                    });
-                });
-
-                $('#example, #tableAset, #tablePelanggan, #tablePerangkat, #tablePLT').DataTable();
->>>>>>> 804e303f982a45915347f7e48de0b109d39fd599
 
                 $('#btnSo').on('click', () => {
                     var noSo = document.getElementById('noSo').value;
@@ -352,34 +307,40 @@
                     var noPs = $('#noPs').val();
                     var noIo = $('#noIo').val()
                     var alamat = $('#alamat').val()
+                    noSo = noSo.trim();
 
-<<<<<<< HEAD
                     var i = 0
                     var id = []
-                    var validate = db.collection('Data SO').where('noSo', '==',noSo).get()
-                    .then((snapshot) => {
-                        snapshot.forEach((doc) => {
-                            console.log(doc.id)
-                            if (doc.id != null){
-                                id[i] = doc.id;
-                                i++;      
+                    var validate = db.collection('Data SO').where('noSo', '==', noSo).get()
+                        .then((snapshot) => {
+                            snapshot.forEach((doc) => {
+                                console.log(doc.id)
+                                if (doc.id != null) {
+                                    id[i] = doc.id;
+                                    i++;
+                                }
+                            })
+                            //console.log(i);
+                            //console.log(id);
+                            if (i == 0) {
+                                var data = db.collection("Data SO").doc()
+                                data.set({
+                                        noSo: noSo,
+                                        namaSo: namaSo,
+                                        noIo: noIo,
+                                        noPs: noPs,
+                                        alamat: alamat
+                                    })
+                                    .then(function () {
+                                        alert("Document successfully written!");
+                                    })
+                                    .catch(function (error) {
+                                        alert("Error writing document: ", error);
+                                    });
+                            } else {
+                                alert("Data already exsist!")
                             }
-=======
-                    var data = db.collection("Data SO").doc()
-                    data.set({
-                            noSo: noSo,
-                            namaSo: namaSo,
-                            noIo: noIo,
-                            noPs: noPs,
-                            alamat: alamat
                         })
-                        .then(function () {
-                            console.log("Document successfully written!");
->>>>>>> 804e303f982a45915347f7e48de0b109d39fd599
-                        })
-                        console.log(i);
-                        console.log(id);
-                    })
                 })
             })
         </script>
