@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const firebase = require('firebase-admin')
 const engines = require(`consolidate`);
-const mail = require('nodemailer')
 const path = require('path');
 require('dotenv').config()
 
@@ -60,10 +59,6 @@ var directTransport = require('nodemailer-direct-transport');
 var nodemailer = require('nodemailer');
 var options = {};
 var transporter = nodemailer.createTransport(directTransport(options))
-
-var nodemailer = require('nodemailer');
-
-
 
 
 app.post('/sendEmail', (req, res) => {

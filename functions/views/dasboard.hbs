@@ -129,6 +129,7 @@
                             <th>No PS</th>
                             <th>No IO</th>
                             <th>Alamat</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="listDataSo">
@@ -141,6 +142,7 @@
                             <th>No PS</th>
                             <th>No IO</th>
                             <th>Alamat</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -199,6 +201,7 @@
 
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Position</th>
                             <th>Office</th>
@@ -246,34 +249,77 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore()
 
+            function dispo(){
+
+                alert("this is dispo button")
+            }
+            function edit(){
+                alert("this is edit button")
+            }
+            function view(){
+                alert("this is view button")
+            }
+
+
+            function getElm(){
+                console.log(this)
+                
+            }
+
+            function textContentSo(doc) {
+                var tr = document.createElement('tr');
+                var namaSo = document.createElement('td');
+                var noSo = document.createElement('td');
+                var noPs = document.createElement('td');
+                var noIo = document.createElement('td');
+                var alamat = document.createElement('td');
+                
+
+                var span = document.createElement('td');
+                var edit = document.createElement('button');
+                var view = document.createElement('button');
+                var dispo = document.createElement('button');
+                dispo.addEventListener("click", dispo)
+                edit.addEventListener("click", edit)
+                view.addEventListener("click", view)
+//                tr.addEventListener("click", getElm)
+                edit.textContent = "Edit";
+                view.textContent = "View";
+                dispo.textContent = "dispo";
+                span.appendChild(edit)
+                span.appendChild(view)
+                span.appendChild(dispo)
+
+
+                //console.log(doc)
+                noSo.textContent = doc.data().noSo;
+                namaSo.textContent = doc.data().namaSo;
+                noPs.textContent = doc.data().noPs;
+                noIo.textContent = doc.data().noIo;
+                alamat.textContent = doc.data().alamat;
+                //console.log(doc.id)
+
+                tr.setAttribute('data-id', doc.id)
+        
+                tr.appendChild(noSo);
+                tr.appendChild(namaSo);
+                tr.appendChild(noPs);
+                tr.appendChild(noIo);
+                tr.appendChild(alamat);
+                tr.appendChild(span);
+                listDataSo.appendChild(tr);
+            }
+
             function getDataSo() {
-                db.collection('Data SO').get().then((snapshot) => {
-                    snapshot.forEach((doc) => {
-                        var tr = document.createElement('tr');
-                        var namaSo = document.createElement('td');
-                        var noSo = document.createElement('td');
-                        var noPs = document.createElement('td');
-                        var noIo = document.createElement('td');
-                        var alamat = document.createElement('td');
-                        //console.log(doc)
-                        noSo.textContent = doc.data().noSo;
-                        namaSo.textContent = doc.data().namaSo;
-                        noPs.textContent = doc.data().noPs;
-                        noIo.textContent = doc.data().noIo;
-                        alamat.textContent = doc.data().alamat;
-                        //console.log(doc.id)
-
-                        tr.appendChild(noSo);
-                        tr.appendChild(namaSo);
-                        tr.appendChild(noPs);
-                        tr.appendChild(noIo);
-                        tr.appendChild(alamat);
-                        listDataSo.appendChild(tr);
-
+                db.collection('Data SO').onSnapshot(snapshot => {
+                    var changes = snapshot.docChanges();
+                    changes.forEach((change) => {
+                        if (change.type == 'added') {
+                            console.log(change.doc)
+                            textContentSo(change.doc)
+                        }
                     })
-                    $('#example').DataTable({
-                        "searching": true
-                    });
+                    $('#example').DataTable({});
                 })
             }
             $(document).ready(() => {
