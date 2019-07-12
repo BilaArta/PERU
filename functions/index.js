@@ -127,6 +127,7 @@ app.get(`/test`, (req, res) => {
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
+<<<<<<< HEAD
 
     res.render('dasboard', {
         dataFb: cf
@@ -135,6 +136,11 @@ app.get(`/home`, (req, res) => {
 
 app.get(`/app/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
+=======
+    res.render('dasboard', {
+        dataFb: cf
+    })
+>>>>>>> 804e303f982a45915347f7e48de0b109d39fd599
 
     res.render('dasboard', {
         dataFb: cf
