@@ -26,13 +26,29 @@
 <body>
 
 
-<span class="glyphicon glyphicon-pencil">asdsd</span>
+{{!-- <span class="glyphicon glyphicon-pencil">asdsd</span> --}}
 
+<input type="text" id="email">
+<button class="btn btn=primary">Button</button>
    
 
 <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 
     <!-- Add Firebase products that you want to use -->
-
+<script>
+    $(document).ready(() => {
+        $(".btn").on("click", () => {
+            var i = 0
+            var str = $("#email").val()
+            str = str.split(",")
+            console.log(str.length)
+            do {
+                console.log(str[i].trim())
+                i++
+            }while(i < str.length)
+            console.log(str.toString())
+        })
+    })
+</script>
 </body> 
 </html>

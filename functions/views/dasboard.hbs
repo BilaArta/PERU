@@ -45,6 +45,12 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#menu2">Admin Aset</a>
             </li>
+            <li class="nav-item">
+                <label class="nav-link" id="userName"></label>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="btnLogout">Logout</button>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -145,6 +151,69 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
+                    {{!-- <button class="btn btn-success" data-toggle="modal" data-target="#dataSo"
+                        style="margin-bottom: 12px">TAMBAH DATA</button> --}}
+
+                    <!-- The Modal ===================================== MODAL EDIT SO--> 
+                    <div class="modal fade bd-example-modal-lg" id="editDataSo">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">EDIT DATA SO <br> <label id="label"></label></h4>
+                                    <input type="text" id="doc" style="display:none">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form class="was-validated" method="POST">
+                                        <div class="form-group">
+                                            <label for="noSo">No SO :</label>
+                                            <input type="text" class="form-control" id="editNoSo" placeholder="" name="noSo"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nama SO :</label>
+                                            <input type="text" class="form-control" id="editNamaSo" placeholder=""
+                                                name="namaSo" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="noPs">No PS :</label>
+                                            <input type="text" class="form-control" id="editNoPs" placeholder="" name="noPs"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="noIo">No IO :</label>
+                                            <input type="text" class="form-control" id="editNoIo" placeholder="" name="noIo"
+                                                required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat :</label>
+                                            <input type="text" class="form-control" id="editAlamat" placeholder=""
+                                                name="alamat" required>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+                                        </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" id="editBtnSo" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </table>
 
             </div>
@@ -249,21 +318,23 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore()
 
-            function dispo(){
+            function dispo() {
 
                 alert("this is dispo button")
             }
-            function edit(){
+
+            function edit() {
                 alert("this is edit button")
             }
-            function view(){
+
+            function view() {
                 alert("this is view button")
             }
 
 
-            function getElm(){
+            function getElm() {
                 console.log(this)
-                
+
             }
 
             function textContentSo(doc) {
@@ -273,20 +344,41 @@
                 var noPs = document.createElement('td');
                 var noIo = document.createElement('td');
                 var alamat = document.createElement('td');
-                
+
 
                 var span = document.createElement('td');
                 var edit = document.createElement('button');
                 var view = document.createElement('button');
                 var dispo = document.createElement('button');
-                dispo.classList.add("dispo")
-                edit.addEventListener("click", (e)=> {
-                    alert($(e.target.parentNode.parentNode).data('id'))
-                    console.log(e.target.parentNode.parentNode)
+                
+                $(edit).attr({
+                    "data-toggle" :"modal", 
+                    "data-target" : "#editDataSo"
                 })
 
+                dispo.classList.add("dispo")
+                edit.addEventListener("click", (e) => {
+                    var val = $(e.target.parentNode.parentNode).data('id')
+                    
+                    db.collection("Data SO").doc(val).get()
+                    .then((doc)=> {
+                        if(doc.exists){
+                            $('#doc').val(val)
+                            $('#label').text(doc.data().noSo)
+                            $('#editNoSo').val(doc.data().noSo)
+                            $('#editNamaSo').val(doc.data().namaSo)
+                            $('#editNoPs').val(doc.data().noPs)
+                            $('#editNoIo').val(doc.data().noIo)
+                            $('#editAlamat').val(doc.data().alamat)
+                        }else{
+                            console.log("No such document")
+                        }
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                })
 
-//                tr.addEventListener("click", getElm)
+                //                tr.addEventListener("click", getElm)
                 edit.textContent = "Edit";
                 view.textContent = "View";
                 dispo.textContent = "dispo";
@@ -304,7 +396,7 @@
                 //console.log(doc.id)
 
                 tr.setAttribute('data-id', doc.id)
-        
+
                 tr.appendChild(noSo);
                 tr.appendChild(namaSo);
                 tr.appendChild(noPs);
@@ -316,17 +408,42 @@
 
             function getDataSo() {
                 var n = 0
-                db.collection('Data SO').get().then((docs) =>{
+                db.collection('Data SO').get().then((docs) => {
                     docs.forEach((doc) => {
                         textContentSo(doc)
                         n++
                     })
                     $('#example').DataTable({});
                     console.log(n)
-                }) 
+                })
             }
 
-            function addDataSo(){
+            function editDataSo() {
+                var noSo = document.getElementById('editNoSo').value;
+                var namaSo = $('#editNamaSo').val();
+                var noPs = $('#editNoPs').val();
+                var noIo = $('#editNoIo').val()
+                var alamat = $('#editAlamat').val()
+                var id = $('#doc').val()
+                noSo = noSo.trim();
+
+                db.collection("Data SO").doc(id)
+                .update({
+                    noSo: noSo,
+                    namaSo: namaSo,
+                    noIo: noIo,
+                    noPs: noPs,
+                    alamat: alamat
+                }).then(() => {
+                    alert("Document successfully Edited!");
+                    window.location.replace(window.location.href)
+                })
+                .catch(function (error) {
+                    alert("Error writing document: ", error);
+                });
+            }
+
+            function addDataSo() {
                 var noSo = document.getElementById('noSo').value;
                 var namaSo = $('#namaSo').val();
                 var noPs = $('#noPs').val();
@@ -380,7 +497,7 @@
                         var isAnonymous = user.isAnonymous;
                         var uid = user.uid;
                         var providerData = user.providerData;
-                        $('#username').val(displayName);
+                        $('#userName').text(displayName);
                         name = displayName;
 
                         console.log(name + " Online")
@@ -394,6 +511,13 @@
 
                 $('#btnSo').on('click', () => {
                     addDataSo();
+                })
+                $('#editBtnSo').on('click', () => {
+                    if(confirm("Are u Sure Update Data?")){
+                        editDataSo()
+                    }else {
+                        alert("cancel edit data")
+                    }
                 })
 
                 $('.dispo').on('click', () => {
