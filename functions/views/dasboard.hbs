@@ -279,9 +279,13 @@
                 var edit = document.createElement('button');
                 var view = document.createElement('button');
                 var dispo = document.createElement('button');
-                dispo.addEventListener("click", dispo)
-                edit.addEventListener("click", edit)
-                view.addEventListener("click", view)
+                dispo.classList.add("dispo")
+                edit.addEventListener("click", (e)=> {
+                    alert($(e.target.parentNode.parentNode).data('id'))
+                    console.log(e.target.parentNode.parentNode)
+                })
+
+
 //                tr.addEventListener("click", getElm)
                 edit.textContent = "Edit";
                 view.textContent = "View";
@@ -311,21 +315,61 @@
             }
 
             function getDataSo() {
-                db.collection('Data SO').onSnapshot(snapshot => {
-                    var changes = snapshot.docChanges();
-                    changes.forEach((change) => {
-                        if (change.type == 'added') {
-                            console.log(change.doc)
-                            textContentSo(change.doc)
-                        }
+                var n = 0
+                db.collection('Data SO').get().then((docs) =>{
+                    docs.forEach((doc) => {
+                        textContentSo(doc)
+                        n++
                     })
                     $('#example').DataTable({});
-                })
+                    console.log(n)
+                }) 
+            }
+
+            function addDataSo(){
+                var noSo = document.getElementById('noSo').value;
+                var namaSo = $('#namaSo').val();
+                var noPs = $('#noPs').val();
+                var noIo = $('#noIo').val()
+                var alamat = $('#alamat').val()
+                noSo = noSo.trim();
+
+                var i = 0
+                var id = []
+                var validate = db.collection('Data SO').where('noSo', '==', noSo).get()
+                    .then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            console.log(doc.id)
+                            if (doc.id != null) {
+                                id[i] = doc.id;
+                                i++;
+                            }
+                        })
+                        //console.log(i);
+                        //console.log(id);
+                        if (i == 0) {
+                            var data = db.collection("Data SO").doc()
+                            data.set({
+                                    noSo: noSo,
+                                    namaSo: namaSo,
+                                    noIo: noIo,
+                                    noPs: noPs,
+                                    alamat: alamat
+                                })
+                                .then(function () {
+                                    alert("Document successfully written!");
+                                    window.location.replace(window.location.href)
+                                })
+                                .catch(function (error) {
+                                    alert("Error writing document: ", error);
+                                });
+                        } else {
+                            alert("Data already exsist!")
+                        }
+                    })
             }
             $(document).ready(() => {
                 //get data table
-                getDataSo()
-
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
                         // User is signed in.
@@ -346,47 +390,15 @@
                     }
                 });
 
+                getDataSo()
 
                 $('#btnSo').on('click', () => {
-                    var noSo = document.getElementById('noSo').value;
-                    var namaSo = $('#namaSo').val();
-                    var noPs = $('#noPs').val();
-                    var noIo = $('#noIo').val()
-                    var alamat = $('#alamat').val()
-                    noSo = noSo.trim();
+                    addDataSo();
+                })
 
-                    var i = 0
-                    var id = []
-                    var validate = db.collection('Data SO').where('noSo', '==', noSo).get()
-                        .then((snapshot) => {
-                            snapshot.forEach((doc) => {
-                                console.log(doc.id)
-                                if (doc.id != null) {
-                                    id[i] = doc.id;
-                                    i++;
-                                }
-                            })
-                            //console.log(i);
-                            //console.log(id);
-                            if (i == 0) {
-                                var data = db.collection("Data SO").doc()
-                                data.set({
-                                        noSo: noSo,
-                                        namaSo: namaSo,
-                                        noIo: noIo,
-                                        noPs: noPs,
-                                        alamat: alamat
-                                    })
-                                    .then(function () {
-                                        alert("Document successfully written!");
-                                    })
-                                    .catch(function (error) {
-                                        alert("Error writing document: ", error);
-                                    });
-                            } else {
-                                alert("Data already exsist!")
-                            }
-                        })
+                $('.dispo').on('click', () => {
+                    console.log(this)
+                    alert('click')
                 })
             })
         </script>
