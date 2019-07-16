@@ -28,6 +28,9 @@
     <style>
         body {
             background-color: #f1f2f6
+        },
+        #checkboxs label input{
+            margin: 28px
         }
     </style>
 
@@ -213,10 +216,51 @@
 
                             </div>
                         </div>
-                    </div>
+                     </div> {{!-- =============== End Modal EDIT DATA SO =============== --}}
                 </table>
 
+
+                    <!-- The Modal ===================================== MODAL DISPO DATA SO--> 
+                    <div class="modal fade bd-example-modal-lg" id="dispoDataSo">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">DISPO DATA SO TO :<br> <label id="labelDispo"></label></h4>
+                                    <input type="text" id="docDispoSo" style="display:none">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form class="was-validated" method="POST">
+                                        <div class="form-group">
+                                            <label for="noSo">DISPO TO :</label>
+                                            <input type="text" class="form-control" id="editNoSo" placeholder="example1@email.com, example2@email.com, example3@email.com," name="noSo"
+                                                required>
+                                        </div>
+                                        <div class="form-group" >
+                                            <form>
+                                                <div id="checkboxs">
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                     </div> {{!-- =============== End Modal DISPO DATA SO =============== --}}
+
             </div>
+
+{{!-- ================================================================ PAGE DATA SO ========================================================================= --}}
 
             <div class="tab-pane fade" id="menu1">
                 <div class="row">
@@ -319,7 +363,6 @@
             const db = firebase.firestore()
 
             function dispo() {
-
                 alert("this is dispo button")
             }
 
@@ -355,8 +398,16 @@
                     "data-toggle" :"modal", 
                     "data-target" : "#editDataSo"
                 })
+                $(view).attr({
+                    "data-toggle" :"modal", 
+                    "data-target" : "#editDataSo"
+                })
+                $(dispo).attr({
+                    "data-toggle" :"modal", 
+                    "data-target" : "#dispoDataSo"
+                })
 
-                dispo.classList.add("dispo")
+                
                 edit.addEventListener("click", (e) => {
                     var val = $(e.target.parentNode.parentNode).data('id')
                     
@@ -377,15 +428,13 @@
                         console.log(error)
                     })
                 })
-
-                //                tr.addEventListener("click", getElm)
+                //tr.addEventListener("click", getElm)
                 edit.textContent = "Edit";
                 view.textContent = "View";
                 dispo.textContent = "dispo";
                 span.appendChild(edit)
                 span.appendChild(view)
                 span.appendChild(dispo)
-
 
                 //console.log(doc)
                 noSo.textContent = doc.data().noSo;
@@ -394,9 +443,7 @@
                 noIo.textContent = doc.data().noIo;
                 alamat.textContent = doc.data().alamat;
                 //console.log(doc.id)
-
                 tr.setAttribute('data-id', doc.id)
-
                 tr.appendChild(noSo);
                 tr.appendChild(namaSo);
                 tr.appendChild(noPs);
@@ -415,6 +462,29 @@
                     })
                     $('#example').DataTable({});
                     console.log(n)
+                })
+            }
+
+            function createElmCheckBox(doc) {
+                var input = document.createElement('input')
+                var label = document.createElement('label')
+                var label = document.createElement('label')
+                $(input).attr('type','checkbox')
+                $(input).val(doc.data().email)
+                input.textContent = doc.data().email.toString()
+                label.textContent = doc.data().email.toString()
+                document.getElementById("checkboxs").appendChild(label)
+                label.append(input)
+                console.log(input)
+            }
+
+            function getDataEmail(){
+                db.collection('email').get()
+                .then((docs) => {
+                    docs.forEach((doc) => {
+                        createElmCheckBox(doc)
+                        console.log(doc.data())
+                    })
                 })
             }
 
@@ -508,7 +578,7 @@
                 });
 
                 getDataSo()
-
+                getDataEmail()
                 $('#btnSo').on('click', () => {
                     addDataSo();
                 })

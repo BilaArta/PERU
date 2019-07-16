@@ -117,7 +117,9 @@ app.post('/addSo', (req, res) => {
 app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
-    res.render('test')
+    res.render('test', {
+        dataFb : cf
+    })
 })
 
 app.get(`/home`, (req, res) => {

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -25,30 +24,82 @@
 
 <body>
 
+    {{!-- <span class="glyphicon glyphicon-pencil">asdsd</span> --}}
 
-{{!-- <span class="glyphicon glyphicon-pencil">asdsd</span> --}}
+    <input type="t" id="email">
+    <button class="btn btn=primary">Button</button>
+    <form action="" id="checkboxs">
+        <input type="checkbox"><label>ASDSD</label></input>
+        <input type="checkbox"><label>ASDSD</label></input>
+        <input type="checkbox"><label>ASDSD</label></input>
+        <input type="checkbox" value="LSOADJDJ">
+    </form>
 
-<input type="text" id="email">
-<button class="btn btn=primary">Button</button>
-   
 
-<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+
 
     <!-- Add Firebase products that you want to use -->
-<script>
-    $(document).ready(() => {
-        $(".btn").on("click", () => {
-            var i = 0
-            var str = $("#email").val()
-            str = str.split(",")
-            console.log(str.length)
-            do {
-                console.log(str[i].trim())
-                i++
-            }while(i < str.length)
-            console.log(str.toString())
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "{{dataFb.apiKey}}",
+            authDomain: "{{dataFb.authDomain}}",
+            databaseURL: "{{dataFb.databaseURL}}",
+            projectId: "{{dataFb.projectId}}",
+            storageBucket: "{{dataFb.storageBucket}}",
+            messagingSenderId: "{{dataFb.messagingSenderId}}",
+            appId: "{{dataFb.appId}}"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore()
+
+        function createElmCheckBox(doc) {
+            var input = document.createElement('input')
+            var label = document.createElement('label')
+            var label = document.createElement('label')
+            
+            $(input).attr('type', 'checkbox')
+            $(input).attr('name', 'check_list[]')
+            $(input).val(doc.data().email)
+            label.textContent = doc.data().email
+            
+            document.getElementById("checkboxs").appendChild(input)
+            
+            
+            console.log(input)
+        }
+
+        function getDataEmail() {
+            db.collection('email').get()
+                .then((docs) => {
+                    docs.forEach((doc) => {
+                        createElmCheckBox(doc)
+                        console.log(doc.data())
+                    })
+                })
+        }
+        $(document).ready(() => {
+            getDataEmail()
+
+            $(".btn").on("click", () => {
+                var i = 0
+                var arr = []
+                var str = $("#email").val()
+                str = str.split(",")
+                console.log(str.length)
+                do {
+                    arr[i] = "'" + str[i].trim() + "'"
+                    i++
+                } while (i < str.length)
+                console.log(str.toString())
+                console.log(arr.toString())
+            })
         })
-    })
-</script>
-</body> 
+    </script>
+</body>
+
 </html>
