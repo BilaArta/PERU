@@ -28,8 +28,10 @@
     <style>
         body {
             background-color: #f1f2f6
-        },
-        #checkboxs label input{
+        }
+
+        ,
+        #checkboxs label input {
             margin: 28px
         }
     </style>
@@ -157,7 +159,7 @@
                     {{!-- <button class="btn btn-success" data-toggle="modal" data-target="#dataSo"
                         style="margin-bottom: 12px">TAMBAH DATA</button> --}}
 
-                    <!-- The Modal ===================================== MODAL EDIT SO--> 
+                    <!-- The Modal ===================================== MODAL EDIT SO-->
                     <div class="modal fade bd-example-modal-lg" id="editDataSo">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -174,8 +176,8 @@
                                     <form class="was-validated" method="POST">
                                         <div class="form-group">
                                             <label for="noSo">No SO :</label>
-                                            <input type="text" class="form-control" id="editNoSo" placeholder="" name="noSo"
-                                                required>
+                                            <input type="text" class="form-control" id="editNoSo" placeholder=""
+                                                name="noSo" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
@@ -188,15 +190,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="noPs">No PS :</label>
-                                            <input type="text" class="form-control" id="editNoPs" placeholder="" name="noPs"
-                                                required>
+                                            <input type="text" class="form-control" id="editNoPs" placeholder=""
+                                                name="noPs" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
                                         <div class="form-group">
                                             <label for="noIo">No IO :</label>
-                                            <input type="text" class="form-control" id="editNoIo" placeholder="" name="noIo"
-                                                required>
+                                            <input type="text" class="form-control" id="editNoIo" placeholder=""
+                                                name="noIo" required>
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
                                         </div>
@@ -216,51 +218,55 @@
 
                             </div>
                         </div>
-                     </div> {{!-- =============== End Modal EDIT DATA SO =============== --}}
+                    </div> {{!-- =============== End Modal EDIT DATA SO =============== --}}
                 </table>
 
 
-                    <!-- The Modal ===================================== MODAL DISPO DATA SO--> 
-                    <div class="modal fade bd-example-modal-lg" id="dispoDataSo">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
+                <!-- The Modal ===================================== MODAL DISPO DATA SO-->
+                <div class="modal fade bd-example-modal-lg" id="dispoDataSo">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
 
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">DISPO DATA SO TO :<br> <label id="labelDispo"></label></h4>
-                                    <input type="text" id="docDispoSo" style="display:none">
-                                    <button type="button" class="close" data-dismiss="modal">×</button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form class="was-validated" method="POST">
-                                        <div class="form-group">
-                                            <label for="noSo">DISPO TO :</label>
-                                            <input type="text" class="form-control" id="editNoSo" placeholder="example1@email.com, example2@email.com, example3@email.com," name="noSo"
-                                                required>
-                                        </div>
-                                        <div class="form-group" >
-                                            <form>
-                                                <div id="checkboxs">
-
-                                                </div>
-                                            </form>
-                                        </div>
-                                </div>
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
-                                    </form>
-                                </div>
-
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">DISPO DATA SO TO :<br> <label id="labelDispo"></label></h4>
+                                <input type="text" id="docDispoSo" style="display:none">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
                             </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form class="was-validated" method="POST">
+                                    <div class="form-group">
+                                        <label for="noSo">Add Email :</label>
+                                        <form class="form-inine">
+                                        <input type="email" class="form-control"  id="inputEmail"
+                                            placeholder="example@email.com"
+                                            name="inputEmail" required>
+                                            <button  type="button" id="btnAddEmail">Add Email</button>
+                                        </form>
+                                    </div>
+                                    <div class="form-group">
+                                        <form>
+                                            <div id="checkboxs">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+
                         </div>
-                     </div> {{!-- =============== End Modal DISPO DATA SO =============== --}}
+                    </div>
+                </div> {{!-- =============== End Modal DISPO DATA SO =============== --}}
 
             </div>
 
-{{!-- ================================================================ PAGE DATA SO ========================================================================= --}}
+            {{!-- ================================================================ PAGE DATA SO ========================================================================= --}}
 
             <div class="tab-pane fade" id="menu1">
                 <div class="row">
@@ -362,22 +368,9 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore()
 
-            function dispo() {
-                alert("this is dispo button")
-            }
 
-            function edit() {
-                alert("this is edit button")
-            }
-
-            function view() {
-                alert("this is view button")
-            }
-
-
-            function getElm() {
-                console.log(this)
-
+            function addEmail(){
+                
             }
 
             function textContentSo(doc) {
@@ -393,40 +386,40 @@
                 var edit = document.createElement('button');
                 var view = document.createElement('button');
                 var dispo = document.createElement('button');
-                
+
                 $(edit).attr({
-                    "data-toggle" :"modal", 
-                    "data-target" : "#editDataSo"
+                    "data-toggle": "modal",
+                    "data-target": "#editDataSo"
                 })
                 $(view).attr({
-                    "data-toggle" :"modal", 
-                    "data-target" : "#editDataSo"
+                    "data-toggle": "modal",
+                    "data-target": "#editDataSo"
                 })
                 $(dispo).attr({
-                    "data-toggle" :"modal", 
-                    "data-target" : "#dispoDataSo"
+                    "data-toggle": "modal",
+                    "data-target": "#dispoDataSo"
                 })
 
-                
+
                 edit.addEventListener("click", (e) => {
                     var val = $(e.target.parentNode.parentNode).data('id')
-                    
+
                     db.collection("Data SO").doc(val).get()
-                    .then((doc)=> {
-                        if(doc.exists){
-                            $('#doc').val(val)
-                            $('#label').text(doc.data().noSo)
-                            $('#editNoSo').val(doc.data().noSo)
-                            $('#editNamaSo').val(doc.data().namaSo)
-                            $('#editNoPs').val(doc.data().noPs)
-                            $('#editNoIo').val(doc.data().noIo)
-                            $('#editAlamat').val(doc.data().alamat)
-                        }else{
-                            console.log("No such document")
-                        }
-                    }).catch((error) => {
-                        console.log(error)
-                    })
+                        .then((doc) => {
+                            if (doc.exists) {
+                                $('#doc').val(val)
+                                $('#label').text(doc.data().noSo)
+                                $('#editNoSo').val(doc.data().noSo)
+                                $('#editNamaSo').val(doc.data().namaSo)
+                                $('#editNoPs').val(doc.data().noPs)
+                                $('#editNoIo').val(doc.data().noIo)
+                                $('#editAlamat').val(doc.data().alamat)
+                            } else {
+                                console.log("No such document")
+                            }
+                        }).catch((error) => {
+                            console.log(error)
+                        })
                 })
                 //tr.addEventListener("click", getElm)
                 edit.textContent = "Edit";
@@ -465,25 +458,41 @@
                 })
             }
 
-            function createElmCheckBox(doc) {
+            function createElmCheckBox(doc, n) {
                 var input = document.createElement('input')
                 var label = document.createElement('label')
-                var label = document.createElement('label')
-                $(input).attr('type','checkbox')
+                var span = document.createElement('span')
+
+                $(span).css({
+                    'margin': 12,
+                    'font-size': 20
+                })
+                $(input).css('margin', 8)
+                $(label).css('width', 200)
+
+                $(input).attr('type', 'checkbox')
+                $(input).attr('name', 'list')
                 $(input).val(doc.data().email)
-                input.textContent = doc.data().email.toString()
-                label.textContent = doc.data().email.toString()
-                document.getElementById("checkboxs").appendChild(label)
-                label.append(input)
-                console.log(input)
+                label.textContent = doc.data().email
+
+                $(span).append(label)
+                $(span).append(input)
+                $('#checkboxs').append(span)
+
+                if (n % 3 == 0) {
+                    var br = document.createElement('br')
+                    $('#checkboxs').append(br)
+                }
+               
             }
 
-            function getDataEmail(){
-                db.collection('email').get()
-                .then((docs) => {
+
+            function getDataEmail() {
+                var n = 1
+                db.collection('email').onSnapshot((docs) => {
                     docs.forEach((doc) => {
                         createElmCheckBox(doc)
-                        console.log(doc.data())
+                        n++
                     })
                 })
             }
@@ -498,19 +507,19 @@
                 noSo = noSo.trim();
 
                 db.collection("Data SO").doc(id)
-                .update({
-                    noSo: noSo,
-                    namaSo: namaSo,
-                    noIo: noIo,
-                    noPs: noPs,
-                    alamat: alamat
-                }).then(() => {
-                    alert("Document successfully Edited!");
-                    window.location.replace(window.location.href)
-                })
-                .catch(function (error) {
-                    alert("Error writing document: ", error);
-                });
+                    .update({
+                        noSo: noSo,
+                        namaSo: namaSo,
+                        noIo: noIo,
+                        noPs: noPs,
+                        alamat: alamat
+                    }).then(() => {
+                        alert("Document successfully Edited!");
+                        window.location.replace(window.location.href)
+                    })
+                    .catch(function (error) {
+                        alert("Error writing document: ", error);
+                    });
             }
 
             function addDataSo() {
@@ -577,15 +586,25 @@
                     }
                 });
 
+                $('#dispoBtnSo').on('click', () => {
+                    var arr = []
+
+                    $("input[name='list']:checked").each(function() {
+                        arr.push(this.value)
+                    });
+                    console.log(arr)
+                })
+
+
                 getDataSo()
                 getDataEmail()
                 $('#btnSo').on('click', () => {
                     addDataSo();
                 })
                 $('#editBtnSo').on('click', () => {
-                    if(confirm("Are u Sure Update Data?")){
+                    if (confirm("Are u Sure Update Data?")) {
                         editDataSo()
-                    }else {
+                    } else {
                         alert("cancel edit data")
                     }
                 })

@@ -31,7 +31,7 @@
     <form action="" id="checkboxs">
         <input type="checkbox"><label>ASDSD</label></input>
         <input type="checkbox"><label>ASDSD</label></input>
-        <input type="checkbox"><label>ASDSD</label></input>
+
         <input type="checkbox" value="LSOADJDJ">
     </form>
 
@@ -57,28 +57,38 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore()
 
-        function createElmCheckBox(doc) {
+        function createElmCheckBox(doc,n) {
             var input = document.createElement('input')
             var label = document.createElement('label')
-            var label = document.createElement('label')
-            
+            var span = document.createElement('span')
+
+            $(span).css({'margin':12, 'font-size':20})
+            $(input).css('margin', 8)
+
             $(input).attr('type', 'checkbox')
             $(input).attr('name', 'check_list[]')
             $(input).val(doc.data().email)
             label.textContent = doc.data().email
             
-            document.getElementById("checkboxs").appendChild(input)
+            $(span).append(label)
+            $(span).append(input)
+            $('#checkboxs').append(span)
             
-            
+            if(n%4 == 0){
+                var br = document.createElement('br')
+                $('#checkboxs').append(br)
+            }
             console.log(input)
         }
 
         function getDataEmail() {
+            var n = 1
             db.collection('email').get()
                 .then((docs) => {
                     docs.forEach((doc) => {
-                        createElmCheckBox(doc)
+                        createElmCheckBox(doc,n)
                         console.log(doc.data())
+                        n++
                     })
                 })
         }
