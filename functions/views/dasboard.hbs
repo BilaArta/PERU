@@ -236,28 +236,39 @@
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <form class="was-validated" method="POST">
+                                 <div> {{!-- //class="was-validated" --}}
                                     <div class="form-group">
                                         <label for="noSo">Add Email :</label>
-                                        <form class="form-inine">
+                                        <div class="form-inine" >
                                         <input type="email" class="form-control"  id="inputEmail"
                                             placeholder="example@email.com"
                                             name="inputEmail" required>
                                             <button  type="button" id="btnAddEmail">Add Email</button>
-                                        </form>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <form>
+                                        <label><b>Send Email to :</b></label>
+                                        <div>
                                             <div id="checkboxs">
 
                                             </div>
-                                        </form>
+                                            <hr>
+                                            <label><b>CC to :</b></label>
+                                            <div id="checkboxsCC">
+
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div>
+                                            <label for="subject"><b>Subject Email :</b></label>
+                                            <input type="text" class="form-control" id="textSubject" name="textSubject">
+                                        </div>
                                     </div>
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
-                                </form>
+                                </div>
                             </div>
 
                         </div>
@@ -458,17 +469,17 @@
                 })
             }
 
-            function createElmCheckBox(doc, n) {
+            function createElmCheckBox(doc, n, id) {
                 var input = document.createElement('input')
                 var label = document.createElement('label')
                 var span = document.createElement('span')
-
+                
                 $(span).css({
                     'margin': 12,
-                    'font-size': 20
+                    'font-size': 16
                 })
                 $(input).css('margin', 8)
-                $(label).css('width', 200)
+                $(label).css('width', 320)
 
                 $(input).attr('type', 'checkbox')
                 $(input).attr('name', 'list')
@@ -477,23 +488,39 @@
 
                 $(span).append(label)
                 $(span).append(input)
-                $('#checkboxs').append(span)
+                var span2 = span
+                $(id).append(span)
 
-                if (n % 3 == 0) {
+                if (n % 2 == 0) {
                     var br = document.createElement('br')
-                    $('#checkboxs').append(br)
-                }
-               
+                    $(id).append(br)
+                }  
             }
 
+            function addDataEmail() {
+                $("#btnAddEmail").on("click", (e) => {
+                    var email = $('#inputEmail').val()
+                    db.collection("email").doc().set({email : email.trim()})
+                    .then(console.log("email added"))
+                })
+            }
 
             function getDataEmail() {
                 var n = 1
-                db.collection('email').onSnapshot((docs) => {
-                    docs.forEach((doc) => {
-                        createElmCheckBox(doc)
-                        n++
-                    })
+                db.collection("email").onSnapshot(function(snapshot) {
+                snapshot.docChanges().forEach(function(change) {
+                    if (change.type === "added") {
+                        createElmCheckBox(change.doc, n, "#checkboxs")
+                        createElmCheckBox(change.doc, n, "#checkboxsCC")
+                    }
+                    if (change.type === "modified") {
+                        console.log("Modified city: ", change.doc.data());
+                    }
+                    if (change.type === "removed") {
+                        console.log("Removed city: ", change.doc.data());
+                    }
+                    n++
+                });
                 })
             }
 
@@ -564,7 +591,8 @@
                         }
                     })
             }
-            $(document).ready(() => {
+            $(document).ready((e) => {
+                
                 //get data table
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
@@ -588,16 +616,16 @@
 
                 $('#dispoBtnSo').on('click', () => {
                     var arr = []
-
                     $("input[name='list']:checked").each(function() {
                         arr.push(this.value)
                     });
                     console.log(arr)
                 })
 
-
                 getDataSo()
                 getDataEmail()
+                addDataEmail()
+
                 $('#btnSo').on('click', () => {
                     addDataSo();
                 })
