@@ -61,7 +61,7 @@ var options = {};
 var transporter = nodemailer.createTransport(directTransport(options))
 
 
-app.post('/sendEmail', (req, res) => {
+app.get('/sendEmail', (req, res) => {
     var data = req.body
     var email = data.email
     console.log(data.uid);
@@ -97,8 +97,24 @@ app.post('/sendEmail', (req, res) => {
     })
 })
 
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'login',
+        user: process.env.email,
+        pass: process.env.pass
+
+    }
+});
 
 
+app.get("/home/email", (req,res) => {
+    console.log(req.body.n);
+    res.render('dasboard')
+})
+// https://medium.com/@mariusc23/send-an-email-using-only-javascript-b53319616782
 //================SEND EMAIL========================
 
 //================input data========================
@@ -124,9 +140,9 @@ app.get(`/test`, (req, res) => {
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-
     res.render('dasboard', {
-        dataFb: cf
+        dataFb: cf,
+        sendmail : transporter
     })
 })
 
@@ -134,7 +150,8 @@ app.get(`/app/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
     res.render('dasboard', {
-        dataFb: cf
+        dataFb: cf,
+        sendmail : transporter
     })
 })
 
@@ -143,7 +160,8 @@ app.get('/', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
     
     res.render('login.hbs', {
-        dataFb: cf
+        dataFb: cf,
+        sendmail : transporter
     })
 })
 

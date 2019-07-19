@@ -33,7 +33,7 @@
         ,
         #checkboxs label input {
             margin: 28px
-        }
+        } 
     </style>
 
 </head>
@@ -263,7 +263,7 @@
                                             <label for="subject"><b>Subject Email :</b></label>
                                             <input type="text" class="form-control" id="textSubject" name="textSubject">
                                         </div>
-                                    </div>
+                                    </div>   
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer">
@@ -615,11 +615,17 @@
                 });
 
                 $('#dispoBtnSo').on('click', () => {
-                    var arr = []
-                    $("input[name='list']:checked").each(function() {
-                        arr.push(this.value)
-                    });
-                    console.log(arr)
+                    //var arr = []
+                    //$("input[name='list']:checked").each(function() {
+                        //arr.push(this.value)
+                    //});
+                    //console.log(arr)
+                    
+                    var n = document.createElement("input");
+                    $(n).val("Bilbil")
+                    $(n).attr('name', 'n')
+                    console.log(n)
+                    window.location.replace(window.location.href +'/email');
                 })
 
                 getDataSo()
