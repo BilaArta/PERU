@@ -23,9 +23,12 @@
 </head>
 
 <body>
+    {{!-- <button onclick="exports.test('testex')">Test</button> --}}
 
     {{!-- <span class="glyphicon glyphicon-pencil">asdsd</span> --}}
-
+    <button id="testBtn">Test</button>
+    <br>
+    <hr>
     <input type="t" id="email">
     <button class="btn btn=primary">Button</button>
     <form action="" id="checkboxs">
@@ -35,13 +38,17 @@
         <input type="checkbox" value="LSOADJDJ">
     </form>
 
+    <input type="text" name="name" value="Bila Arta">
+
 
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-functions.js"></script>
 
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
         var firebaseConfig = {
@@ -55,7 +62,30 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+
+        // ===================================== testing for local ========================
+        firebase.functions().useFunctionsEmulator('http://localhost:5000') 
+        // ===================================== testing for local ========================
+
         const db = firebase.firestore()
+        const functions = firebase.functions()
+
+        var addMessage = firebase.functions().httpsCallable('test');
+            addMessage('{
+                "name":"Bilbil",
+                "title" :"blalba"
+            }').then(function(result) {
+            // Read result of the Cloud Function.
+            var name = "asdsd"
+            var sanitizedMessage = result.data.text;
+            //console.log(result.data.text)
+            }).catch(function(error) {
+            // Getting the Error details.
+            var code = error.code;
+            var message = error.message;
+            var details = error.details;
+            // ...
+            });
 
         function createElmCheckBox(doc,n) {
             var input = document.createElement('input')
@@ -93,7 +123,7 @@
                 })
         }
         $(document).ready(() => {
-            getDataEmail()
+            //getDataEmail()
 
             $(".btn").on("click", () => {
                 var i = 0

@@ -4,10 +4,17 @@ const bodyParser = require('body-parser');
 const firebase = require('firebase-admin')
 const engines = require(`consolidate`);
 const path = require('path');
+var nodemailer = require('nodemailer');
+var directTransport = require('nodemailer-direct-transport');
+
+const cors = require('cors')({origin: true});
+
 require('dotenv').config()
-
-
+const mail = express();
 const app = express();
+mail.use(cors);
+// app.use(cors);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -54,11 +61,6 @@ app.set('view engine', `hbs`);
 
 
 //================SEND EMAIL========================
-
-var directTransport = require('nodemailer-direct-transport');
-var nodemailer = require('nodemailer');
-var options = {};
-var transporter = nodemailer.createTransport(directTransport(options))
 
 
 app.get('/sendEmail', (req, res) => {
@@ -113,7 +115,7 @@ var transporter = nodemailer.createTransport({
 app.get("/home/email", (req,res) => {
     console.log(req.body.n);
     res.render('dasboard')
-})
+}) 
 // https://medium.com/@mariusc23/send-an-email-using-only-javascript-b53319616782
 //================SEND EMAIL========================
 
@@ -173,4 +175,51 @@ app.get(`*`, (req, res) => {
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
+
+function sendEmailApp (){
+    // console.log(data.text);
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    // console.log("req.body");
+    // const text = data.text
+    var mail = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            type: 'login',
+            user: process.env.email,
+            pass: process.env.pass
+
+        }
+    });
+
+    var mailOptions = {
+        from: 'bilaarta@gmail.com',
+        to: 'bilaartawirawan@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+    };
+    console.log(".....");
+    mail.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log("error");
+            
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    })
+}
 exports.app = functions.https.onRequest(app);
+
+exports.test = functions.https.onRequest((req,res) => {
+    console.log(req.body);
+    console.log(req.body.name);
+    console.log(req.data);
+    cors(req,res, () => {
+        console.log(req.body.name);
+        console.log(req.name);
+        console.log(req.body);
+        
+    })
+})
