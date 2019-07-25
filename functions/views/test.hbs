@@ -71,10 +71,10 @@
         const functions = firebase.functions()
 
         var addMessage = firebase.functions().httpsCallable('test');
-            addMessage('{
+            addMessage({
                 "name":"Bilbil",
                 "title" :"blalba"
-            }').then(function(result) {
+            }).then(function(result) {
             // Read result of the Cloud Function.
             var name = "asdsd"
             var sanitizedMessage = result.data.text;

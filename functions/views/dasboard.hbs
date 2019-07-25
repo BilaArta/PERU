@@ -52,6 +52,7 @@
             </li>
             <li class="nav-item">
                 <label class="nav-link" id="userName"></label>
+                <input type="email" id="userEmail" style="display: none">
             </li>
             <li class="nav-item">
                 <button class="nav-link" id="btnLogout">Logout</button>
@@ -361,6 +362,7 @@
 
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-database.js"></script>
 
         <!-- Add Firebase products that you want to use -->
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
@@ -379,11 +381,7 @@
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore()
-
-
-            function addEmail(){
-                
-            }
+            const rdb = firebase.database()
 
             function textContentSo(doc) {
                 var tr = document.createElement('tr');
@@ -483,7 +481,11 @@
                 $(label).css('width', 320)
 
                 $(input).attr('type', 'checkbox')
-                $(input).attr('name', 'list')
+                if (id == "#checkboxs"){
+                    $(input).attr('name', 'list')
+                }else {
+                    $(input).attr('name', 'listCC')
+                }
                 $(input).val(doc.data().email)
                 label.textContent = doc.data().email
 
@@ -501,7 +503,7 @@
             function addDataEmail() {
                 $("#btnAddEmail").on("click", (e) => {
                     var email = $('#inputEmail').val()
-                    db.collection("email").doc().set({email : email.trim()})
+                    db.collection("email").doc(email).set({email : email.trim()})
                     .then(console.log("email added"))
                 })
             }
@@ -592,8 +594,51 @@
                         }
                     })
             }
-            $(document).ready((e) => {
+
+            function tmpEmail(arr, arrCC, subject,sender){
+                var currentDate = new Date();
+                var time = new Date().toLocaleTimeString();
+                var date = currentDate.getDate();
+                var month = currentDate.getMonth(); 
+                var year = currentDate.getFullYear();
+                var monthDateYear  = (month+1) + "/" + date + "/" + year;
+
+                var data = {
+                    sendTo  : arr,
+                    CC      : arrCC,
+                    subject : subject,
+                    form    : sender,
+                    date    : monthDateYear,
+                    time    : time
+
+                }
+                rdb.ref("Email").set(data)
+                .then(() => {
+                    console.log("Email saved")
+                }).catch((err) => {
+                    console.log("error save email")
+                })
+            }
+
+            function sendEmail(){    
+                firebase.functions().httpsCallable('sendEmail')({
+                    "name":"Bilbil",
+                    "title" :"blalba"
+                }).then(function(result) {
+                // Read result of the Cloud Function.
+                var name = "asdsd"
+                var sanitizedMessage = result.data.text;
+                //console.log(result.data.text)
+                }).catch(function(error) {
+                // Getting the Error details.
+                var code = error.code;
+                var message = error.message;
+                var details = error.details;
+                // ...
+                });
                 
+            }
+            $(document).ready((e) => {
                 //get data table
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
@@ -606,7 +651,17 @@
                         var uid = user.uid;
                         var providerData = user.providerData;
                         $('#userName').text(displayName);
+                        $('#userEmail').val(email);
                         name = displayName;
+                        
+                        db.collection("User").doc(email).set({
+                            username : name,
+                            email : email
+                        }).then(() => {
+                            console.log("User added to database User")
+                        }).catch((err) => {
+                            console.log(err)
+                        })
 
                         console.log(name + " Online")
 
@@ -616,12 +671,24 @@
                 });
 
                 $('#dispoBtnSo').on('click', () => {
-                    //var arr = []
-                    //$("input[name='list']:checked").each(function() {
-                        //arr.push(this.value)
-                    //});
-                    //console.log(arr)
-                    
+                    var arr = []
+                    $("input[name='list']:checked").each(function() {
+                        arr.push(this.value)
+                    });
+
+                    var sendTo = arr;
+                    arr = []
+
+                    $("input[name='listCC']:checked").each(function() {
+                        arr.push(this.value)
+                    });
+                    var cc = arr;
+                    console.log("send to " + sendTo);
+                    console.log("CC to " +cc);
+
+                    var subject = $("#textSubject").val();
+                    var user = $('#userEmail').val();
+                    tmpEmail(sendTo, cc, subject, user);
                 })
 
                 getDataSo()
@@ -643,6 +710,21 @@
                     console.log(this)
                     alert('click')
                 })
+
+d = new Date();
+
+// convert to msec
+// add local time zone offset 
+// get UTC time in msec
+utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+console.log(new Date(utc))
+var offset = d.getTimezoneOffset()
+// create new Date object for different city
+// using supplied offset
+nd = new Date(utc + (3600000));
+
+// return time as a string
+console.log("The local time in Denpasar" + " is " + nd.toLocaleString());
             })
         </script>
 

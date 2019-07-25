@@ -65,6 +65,7 @@
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // User is signed in.
+                
                 var displayName = user.displayName;
                 var email = user.email;
                 var emailVerified = user.emailVerified;
@@ -72,17 +73,10 @@
                 var isAnonymous = user.isAnonymous;
                 var uid = user.uid;
                 var providerData = user.providerData;
-                $('#username').val(displayName);
-                db.collection("User").doc().set({
-                        username : displayName,
-                        email : email
-                    }).then(() => {
-                        console.log("User added to database User")
-                    }).catch((error) => {
-                        console.log(error)
-                    })
+                //$('#username').val(displayName);
+                
                 console.log(user.displayName)
-                console.log('login state change')
+                console.log('login state change') 
             
             } else {
                 console.log(' logout state change')
@@ -99,7 +93,6 @@
                     // User successfully signed in.
                     // Return type determines whether we continue the redirect automatically
                     // or whether we leave that to developer to handle.
-                    
                     return true;
                 },
                 uiShown: function () {
