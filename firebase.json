@@ -18,6 +18,10 @@
       {
         "source" : "**",
         "function" : "sendEmail"
+      },
+      {
+        "source" : "**",
+        "function" : "sendmail"
       }
     ]
   }

@@ -33,12 +33,46 @@
         ,
         #checkboxs label input {
             margin: 28px
-        } 
+        }
+
+        .loader {
+            margin-left: 40%;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
 </head>
 
 <body>
+    <div class="loader"></div>
     <div class="container">
         <ul class="nav nav-black nav-tabs">
             <li class="nav-item">
@@ -53,6 +87,7 @@
             <li class="nav-item">
                 <label class="nav-link" id="userName"></label>
                 <input type="email" id="userEmail" style="display: none">
+                <input type="email" id="username" style="display: none">
             </li>
             <li class="nav-item">
                 <button class="nav-link" id="btnLogout">Logout</button>
@@ -237,16 +272,16 @@
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                 <div> {{!-- //class="was-validated" --}}
+                                <div> {{!-- //class="was-validated" --}}
                                     <div class="form-group">
                                         <label for="noSo">Add Email :</label>
-                                        <div class="form-inine" >
-                                        <input type="email" class="form-control"  id="inputEmail"
-                                            placeholder="example@email.com"
-                                            name="inputEmail" required>
-                                            <button  type="button" id="btnAddEmail">Add Email</button>
+                                        <div class="form-inine">
+                                            <input type="email" class="form-control" id="inputEmail"
+                                                placeholder="example@email.com" name="inputEmail" required>
+                                            <button type="button" id="btnAddEmail">Add Email</button>
                                         </div>
                                     </div>
+                                            <div class="loader"></div>
                                     <div class="form-group">
                                         <label><b>Send Email to :</b></label>
                                         <div>
@@ -264,11 +299,11 @@
                                             <label for="subject"><b>Subject Email :</b></label>
                                             <input type="text" class="form-control" id="textSubject" name="textSubject">
                                         </div>
-                                    </div>   
-                            </div>
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" id="dispoBtnSo" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
@@ -278,9 +313,9 @@
 
             </div>
 
-{{!-- ======================= PAGE DATA SO ============================ --}}
+            {{!-- ======================= PAGE DATA SO ============================ --}}
 
-{{!-- =================== Other Page =========================== --}}
+            {{!-- =================== Other Page =========================== --}}
             <div class="tab-pane fade" id="menu1">
                 <div class="row">
                     <div class="col-md-12">
@@ -362,8 +397,8 @@
 
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-database.js"></script>
-
+        <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-functions.js"></script>
         <!-- Add Firebase products that you want to use -->
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
@@ -380,6 +415,8 @@
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
+            firebase.functions().useFunctionsEmulator('http://localhost:5000')
+
             const db = firebase.firestore()
             const rdb = firebase.database()
 
@@ -472,7 +509,7 @@
                 var input = document.createElement('input')
                 var label = document.createElement('label')
                 var span = document.createElement('span')
-                
+
                 $(span).css({
                     'margin': 12,
                     'font-size': 16
@@ -481,9 +518,9 @@
                 $(label).css('width', 320)
 
                 $(input).attr('type', 'checkbox')
-                if (id == "#checkboxs"){
+                if (id == "#checkboxs") {
                     $(input).attr('name', 'list')
-                }else {
+                } else {
                     $(input).attr('name', 'listCC')
                 }
                 $(input).val(doc.data().email)
@@ -497,33 +534,35 @@
                 if (n % 2 == 0) {
                     var br = document.createElement('br')
                     $(id).append(br)
-                }  
+                }
             }
 
             function addDataEmail() {
                 $("#btnAddEmail").on("click", (e) => {
                     var email = $('#inputEmail').val()
-                    db.collection("email").doc(email).set({email : email.trim()})
-                    .then(console.log("email added"))
+                    db.collection("email").doc(email).set({
+                            email: email.trim()
+                        })
+                        .then(console.log("email added"))
                 })
             }
 
             function getDataEmail() {
                 var n = 1
-                db.collection("email").onSnapshot(function(snapshot) {
-                snapshot.docChanges().forEach(function(change) {
-                    if (change.type === "added") {
-                        createElmCheckBox(change.doc, n, "#checkboxs")
-                        createElmCheckBox(change.doc, n, "#checkboxsCC")
-                    }
-                    if (change.type === "modified") {
-                        console.log("Modified city: ", change.doc.data());
-                    }
-                    if (change.type === "removed") {
-                        console.log("Removed city: ", change.doc.data());
-                    }
-                    n++
-                });
+                db.collection("email").onSnapshot(function (snapshot) {
+                    snapshot.docChanges().forEach(function (change) {
+                        if (change.type === "added") {
+                            createElmCheckBox(change.doc, n, "#checkboxs")
+                            createElmCheckBox(change.doc, n, "#checkboxsCC")
+                        }
+                        if (change.type === "modified") {
+                            console.log("Modified city: ", change.doc.data());
+                        }
+                        if (change.type === "removed") {
+                            console.log("Removed city: ", change.doc.data());
+                        }
+                        n++
+                    });
                 })
             }
 
@@ -595,48 +634,49 @@
                     })
             }
 
-            function tmpEmail(arr, arrCC, subject,sender){
+            function tmpEmail(arr, arrCC, subject, sender, username) {
                 var currentDate = new Date();
                 var time = new Date().toLocaleTimeString();
                 var date = currentDate.getDate();
-                var month = currentDate.getMonth(); 
+                var month = currentDate.getMonth();
                 var year = currentDate.getFullYear();
-                var monthDateYear  = (month+1) + "/" + date + "/" + year;
+                var monthDateYear = (month + 1) + "/" + date + "/" + year;
 
                 var data = {
-                    sendTo  : arr,
-                    CC      : arrCC,
-                    subject : subject,
-                    form    : sender,
-                    date    : monthDateYear,
-                    time    : time
-
+                    sendTo: arr,
+                    CC: arrCC,
+                    subject: subject,
+                    from: sender,
+                    date: monthDateYear,
+                    time: time,
+                    username: username
                 }
-                rdb.ref("Email").set(data)
-                .then(() => {
-                    console.log("Email saved")
-                }).catch((err) => {
-                    console.log("error save email")
-                })
+                rdb.ref("Email" + username).set(data)
+                    .then(() => {
+                        sendEmail(data);
+                        console.log("Email saved")
+                    }).catch((err) => {
+                        console.log("error save email")
+                        console.log(err)
+                    })
             }
 
-            function sendEmail(){    
-                firebase.functions().httpsCallable('sendEmail')({
-                    "name":"Bilbil",
-                    "title" :"blalba"
-                }).then(function(result) {
-                // Read result of the Cloud Function.
-                var name = "asdsd"
-                var sanitizedMessage = result.data.text;
-                //console.log(result.data.text)
-                }).catch(function(error) {
-                // Getting the Error details.
-                var code = error.code;
-                var message = error.message;
-                var details = error.details;
-                // ...
+            function sendEmail(data) {
+                firebase.functions().httpsCallable('sendmail')(data).then(function (result) {
+                    // Read result of the Cloud Function
+                    console.log(result.data)
+                    alert(result.data)
+                    //console.log(result.data.text)
+                }).catch(function (error) {
+                    // Getting the Error details.
+                    console.log("errrorrr---")
+                    console.log(error)
+                    var code = error.code;
+                    var message = error.message;
+                    var details = error.details;
+                    // ...
                 });
-                
+
             }
             $(document).ready((e) => {
                 //get data table
@@ -652,11 +692,13 @@
                         var providerData = user.providerData;
                         $('#userName').text(displayName);
                         $('#userEmail').val(email);
+                        $('#username').val(displayName);
                         name = displayName;
-                        
-                        db.collection("User").doc(email).set({
-                            username : name,
-                            email : email
+
+                        db.collection("Users").doc(email).set({
+                            username: name,
+                            email: email,
+                            references: name
                         }).then(() => {
                             console.log("User added to database User")
                         }).catch((err) => {
@@ -671,24 +713,26 @@
                 });
 
                 $('#dispoBtnSo').on('click', () => {
+
                     var arr = []
-                    $("input[name='list']:checked").each(function() {
+                    $("input[name='list']:checked").each(function () {
                         arr.push(this.value)
                     });
 
                     var sendTo = arr;
                     arr = []
 
-                    $("input[name='listCC']:checked").each(function() {
+                    $("input[name='listCC']:checked").each(function () {
                         arr.push(this.value)
                     });
                     var cc = arr;
                     console.log("send to " + sendTo);
-                    console.log("CC to " +cc);
+                    console.log("CC to " + cc);
 
                     var subject = $("#textSubject").val();
                     var user = $('#userEmail').val();
-                    tmpEmail(sendTo, cc, subject, user);
+                    var username = $('#username').val();
+                    tmpEmail(sendTo, cc, subject, user, username);
                 })
 
                 getDataSo()
@@ -711,20 +755,22 @@
                     alert('click')
                 })
 
-d = new Date();
-
-// convert to msec
-// add local time zone offset 
-// get UTC time in msec
-utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-console.log(new Date(utc))
-var offset = d.getTimezoneOffset()
-// create new Date object for different city
-// using supplied offset
-nd = new Date(utc + (3600000));
-
-// return time as a string
-console.log("The local time in Denpasar" + " is " + nd.toLocaleString());
+                $("#btnLogout").on('click', () => {
+                    firebase.auth().signOut().then(function () {
+                        var user = firebase.auth().currentUser;
+                        user.delete().then(function () {
+                            // User deleted.
+                            console.log("user deleted")
+                        }).catch(function (error) {
+                            // An error happened.
+                        });
+                        // Sign-out successful.
+                        console.log("user logout")
+                    }).catch(function (error) {
+                        // An error happened.
+                        console.log(error)
+                    });
+                })
             })
         </script>
 
