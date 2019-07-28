@@ -36,7 +36,10 @@
         }
 
         .loader {
-            margin-left: 40%;
+            background: white;
+            display: block;
+            margin-left: 25%;
+            margin-top: 5%;
             border: 16px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid #3498db;
@@ -45,6 +48,8 @@
             -webkit-animation: spin 2s linear infinite;
             /* Safari */
             animation: spin 2s linear infinite;
+              position: fixed;
+
         }
 
         /* Safari */
@@ -72,8 +77,8 @@
 </head>
 
 <body>
-    <div class="loader"></div>
     <div class="container">
+
         <ul class="nav nav-black nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#home">PTL</a>
@@ -281,7 +286,8 @@
                                             <button type="button" id="btnAddEmail">Add Email</button>
                                         </div>
                                     </div>
-                                            <div class="loader"></div>
+                    {{!-- loader ================ --}}
+                                    <div class="loader" id="loader"></div>
                                     <div class="form-group">
                                         <label><b>Send Email to :</b></label>
                                         <div>
@@ -666,6 +672,7 @@
                     // Read result of the Cloud Function
                     console.log(result.data)
                     alert(result.data)
+                    $("#loader").hide()
                     //console.log(result.data.text)
                 }).catch(function (error) {
                     // Getting the Error details.
@@ -680,6 +687,7 @@
             }
             $(document).ready((e) => {
                 //get data table
+                $("#loader").hide()
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
                         // User is signed in.
@@ -713,7 +721,7 @@
                 });
 
                 $('#dispoBtnSo').on('click', () => {
-
+                    $("#loader").show()
                     var arr = []
                     $("input[name='list']:checked").each(function () {
                         arr.push(this.value)
@@ -733,6 +741,7 @@
                     var user = $('#userEmail').val();
                     var username = $('#username').val();
                     tmpEmail(sendTo, cc, subject, user, username);
+                    
                 })
 
                 getDataSo()
