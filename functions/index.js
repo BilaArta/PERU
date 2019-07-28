@@ -8,7 +8,7 @@ const path = require('path');
 var nodemailer = require('nodemailer');
 var directTransport = require('nodemailer-direct-transport');
 
-var serviceAccount = require("./iconproject-f66b2-firebase-adminsdk-fddzn-988c643207.json");
+var serviceAccount = require("service-adminSDK.json");
 
 
 const cors = require('cors')({origin: true});
