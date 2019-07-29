@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Data</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <style>
+        body {
+            background-color: #f1f2f6
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">No SO : {{data.noSo}}</h2>
+        <hr>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 ">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#navPelanggan">Pelanggan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#navDeskripsiSO">Deskripsi SO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#navDokumen">Dokumen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#navHistory">History</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3"></div>
+
+        </div>
+        <div class="tab-content" style="margin-top: 12px;">
+            <div class="tab-pane active" id="navPelanggan">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="form-group">
+                                <label><b>Pelanggan :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+
+                            <div class="form-group">
+                                <label><b>Alamat Originating :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Alamat Terminating :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Node Type :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="navDeskripsiSO">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="form-group">
+                                <label><b>Nomor IO :</b></label>
+                                <input class="form-control" type="text" value="{{data.noIo}}" id="inputPelanggan">
+                            </div>
+
+                            <div class="form-group">
+                                <label><b>Status :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Service ID :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Tanggal SO Di Buat :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Tanggal SO Di Dispos :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>KHS :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Target SO :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            <div class="form-group">
+                                <label><b>Service :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>Kapasitas :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>PTL Pusat :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            <div class="form-group">
+                                <label><b>PTL Regional :</b></label>
+                                <input class="form-control" type="text" id="inputPelanggan">
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <label><b>PIC :</b></label>
+                                <input type="textarea" id="inputPelanggan">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="navDokumen">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><b>Tanggal TestComm :</b></label>
+                            <input class="form-control" type="text" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Upload BAI :</b></label>
+                            <input  type="file" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>File OTDR, FLOW, BOM :</b></label>
+                            <input  type="file" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>File Dokumen :</b></label>
+                            <input  type="file" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Input IMS:</b></label>
+                            <input  type="file" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Penyerahan BAPS :</b></label>
+                            <input  type="file" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Catatan Aset :</b></label>
+                            <input  type="textarea" id="inputPelanggan">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Keterangan :</b></label>
+                            <input class="form-control" type="textarea" id="inputPelanggan">
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="navHistory">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>History</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-functions.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "{{dataFb.apiKey}}",
+            authDomain: "{{dataFb.authDomain}}",
+            databaseURL: "{{dataFb.databaseURL}}",
+            projectId: "{{dataFb.projectId}}",
+            storageBucket: "{{dataFb.storageBucket}}",
+            messagingSenderId: "{{dataFb.messagingSenderId}}",
+            appId: "{{dataFb.appId}}"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // ===================================== testing for local ========================
+        firebase.functions().useFunctionsEmulator('http://localhost:5000')
+        // ===================================== testing for local ========================
+
+        const db = firebase.firestore()
+        const functions = firebase.functions()
+
+        $(document).ready(() => {
+    </script>
+</body>
+
+</html>

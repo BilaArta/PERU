@@ -103,13 +103,13 @@
             <div class="tab-pane active" id="home">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="text-center"><b>DATA SO</b></h1>
+                        <h1 class="text-center"><b>ADD DATA SO</b></h1>
                     </div>
                 </div>
 
                 <hr>
 
-                <table id="example" class="display" style="width:100%">
+                <table id="tabelDataSoPTL" class="display" style="width:100%">
                     <button class="btn btn-success" data-toggle="modal" data-target="#dataSo"
                         style="margin-bottom: 12px">TAMBAH DATA</button>
 
@@ -184,7 +184,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="listDataSo">
+                    <tbody id="listDataSoPTL">
 
                     </tbody>
                     <tfoot>
@@ -319,81 +319,39 @@
 
             </div>
 
-            {{!-- ======================= PAGE DATA SO ============================ --}}
+            {{!-- ======================= END PAGE DATA SO ============================ --}}
 
-            {{!-- =================== Other Page =========================== --}}
+            {{!-- =================== Admin Aktivasi =========================== --}}
             <div class="tab-pane fade" id="menu1">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="text-center"><b>DATA ASET</b></h1>
+                        <h1 class="text-center"><b>DATA SO</b></h1>
                     </div>
                 </div>
                 <hr>
-                <table id="tableAset" class="display" style="width:100%">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#dataAset"
-                        style="margin-bottom: 12px">TAMBAH DATA</button>
-
-                    <!-- The Modal -->
-                    <div class="modal fade bd-example-modal-lg" id="dataAset">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">TAMBAH DATA ASET</h4>
-                                    <button type="button" class="close" data-dismiss="modal">×</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-
-                                    <form action="/action_page.php" class="was-validated" method="POST">
-                                        <div class="form-group">
-                                            <label for="uname">Nama POP :</label>
-                                            <input type="text" class="form-control" id="uname" placeholder=""
-                                                name="uname" required>
-                                            <div class="valid-feedback">Valid.</div>
-                                            <div class="invalid-feedback">Please fill out this field.</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pwd">Keterangan :</label>
-                                            <input type="text" class="form-control" id="pwd" placeholder="" name="pswd"
-                                                required>
-                                            <div class="valid-feedback">Valid.</div>
-                                            <div class="invalid-feedback">Please fill out this field.</div>
-                                        </div>
-                                </div>
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
+                <table id="tabelDataSoAdminAktivasi" class="display" style="width:100%">
+                    
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>No SO</th>
+                            <th>Nama SO</th>
+                            <th>No PS</th>
+                            <th>No IO</th>
+                            <th>Alamat</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="listDataSoAdminAktivasi">
 
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>No SO</th>
+                            <th>Nama SO</th>
+                            <th>No PS</th>
+                            <th>No IO</th>
+                            <th>Alamat</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -437,20 +395,24 @@
 
                 var span = document.createElement('td');
                 var edit = document.createElement('button');
-                var view = document.createElement('button');
+                var view = document.createElement('a');
                 var dispo = document.createElement('button');
-
+                $(edit).addClass('btn btn-info btn-sm')
+                $(view).addClass('btn btn-success btn-sm')
+                $(dispo).addClass('btn btn-warning btn-sm')
                 $(edit).attr({
                     "data-toggle": "modal",
                     "data-target": "#editDataSo"
                 })
-                $(view).attr({
-                    "data-toggle": "modal",
-                    "data-target": "#editDataSo"
-                })
+                
                 $(dispo).attr({
                     "data-toggle": "modal",
                     "data-target": "#dispoDataSo"
+                })
+
+                view.addEventListener('click', (e) => {
+                    var val = $(e.target.parentNode.parentNode).data('id')
+                    viewPageData(val)
                 })
 
 
@@ -488,15 +450,65 @@
                 noPs.textContent = doc.data().noPs;
                 noIo.textContent = doc.data().noIo;
                 alamat.textContent = doc.data().alamat;
+                
+
                 //console.log(doc.id)
-                tr.setAttribute('data-id', doc.id)
+
+                view.setAttribute('href', window.location.href+'/'+doc.id)
                 tr.appendChild(noSo);
                 tr.appendChild(namaSo);
                 tr.appendChild(noPs);
                 tr.appendChild(noIo);
                 tr.appendChild(alamat);
                 tr.appendChild(span);
-                listDataSo.appendChild(tr);
+                listDataSoPTL.appendChild(tr);
+            }
+
+            function textContentAdminAktivasi(doc) {
+                var tr = document.createElement('tr');
+                var namaSo = document.createElement('td');
+                var noSo = document.createElement('td');
+                var noPs = document.createElement('td');
+                var noIo = document.createElement('td');
+                var alamat = document.createElement('td');
+
+
+                var span = document.createElement('td');
+                var view = document.createElement('a');
+                $(view).addClass('btn btn-primary btn-sm')
+                
+                view.textContent = "Update";
+                
+                span.appendChild(view)
+                
+                //console.log(doc)
+                noSo.textContent = doc.data().noSo;
+                namaSo.textContent = doc.data().namaSo;
+                noPs.textContent = doc.data().noPs;
+                noIo.textContent = doc.data().noIo;
+                alamat.textContent = doc.data().alamat;
+                
+
+                //console.log(doc.id)
+
+                view.setAttribute('href', window.location.href+'/'+doc.id)
+                tr.appendChild(noSo);
+                tr.appendChild(namaSo);
+                tr.appendChild(noPs);
+                tr.appendChild(noIo);
+                tr.appendChild(alamat);
+                tr.appendChild(span);
+                listDataSoAdminAktivasi.appendChild(tr);
+            }
+
+            function viewPageData(id) {
+                var Promise = firebase.functions().httpsCallable('app/'+id)()
+                .then(() => {
+                    console.log("sukses")
+                }).catch((err) => {
+                    console.log('eror')
+                    console.log(err)
+                })
             }
 
             function getDataSo() {
@@ -504,9 +516,11 @@
                 db.collection('Data SO').get().then((docs) => {
                     docs.forEach((doc) => {
                         textContentSo(doc)
+                        textContentAdminAktivasi(doc)
                         n++
                     })
-                    $('#example').DataTable({});
+                    $('#tabelDataSoPTL').DataTable({});
+                    $('#tabelDataSoAdminAktivasi').DataTable({});
                     console.log(n)
                 })
             }
@@ -657,14 +671,7 @@
                     time: time,
                     username: username
                 }
-                rdb.ref("Email" + username).set(data)
-                    .then(() => {
-                        sendEmail(data);
-                        console.log("Email saved")
-                    }).catch((err) => {
-                        console.log("error save email")
-                        console.log(err)
-                    })
+                sendEmail(data)
             }
 
             function sendEmail(data) {
@@ -701,19 +708,8 @@
                         $('#userName').text(displayName);
                         $('#userEmail').val(email);
                         $('#username').val(displayName);
-                        name = displayName;
-
-                        db.collection("Users").doc(email).set({
-                            username: name,
-                            email: email,
-                            references: name
-                        }).then(() => {
-                            console.log("User added to database User")
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-
-                        console.log(name + " Online")
+                        
+                        console.log(displayName + " Online")
 
                     } else {
                         console.log(' Account Logout')
@@ -757,11 +753,6 @@
                     } else {
                         alert("cancel edit data")
                     }
-                })
-
-                $('.dispo').on('click', () => {
-                    console.log(this)
-                    alert('click')
                 })
 
                 $("#btnLogout").on('click', () => {

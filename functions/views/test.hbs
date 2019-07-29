@@ -28,6 +28,7 @@
     {{!-- <span class="glyphicon glyphicon-pencil">asdsd</span> --}}
     <button id="testBtn">Test</button>
     <br>
+    
     <hr>
     <input type="t" id="email">
     <button class="btn btn=primary">Button</button>
@@ -37,9 +38,9 @@
 
         <input type="checkbox" value="LSOADJDJ">
     </form>
-
+ 
     <input type="text" name="name" value="Bila Arta">
-
+    
 
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 
@@ -70,22 +71,18 @@
         const db = firebase.firestore()
         const functions = firebase.functions()
 
-        var addMessage = firebase.functions().httpsCallable('test');
-            addMessage({
-                "name":"Bilbil",
-                "title" :"blalba"
-            }).then(function(result) {
-            // Read result of the Cloud Function.
-            var name = "asdsd"
-            var sanitizedMessage = result.data.text;
-            //console.log(result.data.text)
-            }).catch(function(error) {
-            // Getting the Error details.
-            var code = error.code;
-            var message = error.message;
-            var details = error.details;
-            // ...
-            });
+        function testParams() {
+            var text = {
+                uid : "123",
+                name : "asd"
+            }
+            var test = firebase.functions().httpsCallable('widgets/' +text.uid);
+            test(text).then((result) => {
+                console.log(result)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
 
         function createElmCheckBox(doc,n) {
             var input = document.createElement('input')
@@ -124,6 +121,7 @@
         }
         $(document).ready(() => {
             //getDataEmail()
+            testParams()
 
             $(".btn").on("click", () => {
                 var i = 0

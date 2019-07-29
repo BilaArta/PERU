@@ -16,7 +16,11 @@ const cors = require('cors')({origin: true});
 require('dotenv').config()
 
 const app = express();
-app.use(cors);
+const test = express();
+// test.use(cors);
+// app.use(cors);
+
+
 
 
 app.use(bodyParser.json());
@@ -40,7 +44,7 @@ const AdminSDK = {
 }
 // Initialize Firebase
 firebase.initializeApp(AdminSDK)
-const db = firebase.database()
+const db = firebase.firestore()
 
 app.engine('hbs', engines.handlebars);
 
@@ -173,6 +177,26 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/home/:id', (req, res) => {
+    cors(req,res, () => {
+        var data = "Data not Found"
+        var ref = db.collection("Data SO").get()
+        ref.then((docs) => {
+            docs.forEach((doc) => {  
+                if(doc.id == req.params.id){
+                    data = doc.data();
+                }
+            })
+            
+            res.render('viewData',{
+                data : data
+                })
+        }).catch((err) => {
+            data = err;
+            res.send(err)
+        })
+    })
+})
 
 app.get(`*`, (req, res) => {
     // res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
@@ -182,57 +206,22 @@ app.get(`*`, (req, res) => {
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 
-function sendEmailApp (sendTo, cc, subject, from){
-    // console.log(data.text);
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    // console.log("req.body");
-    // const text = data.text
-    var mail = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            type: 'login',
-            user: process.env.email,
-            pass: process.env.pass
-        }
-    });
 
-    var mailOptions = {
-        from: from,
-        to: sendTo,
-        cc: cc,
-        subject: subject,
-        text: 'Test nodemailer To : '+ sendTo +", CC to "+cc
-    };
-    console.log(".....");
-    mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log("error");
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    })
-    return true
-}
 
 exports.app = functions.https.onRequest(app);
 
 exports.sendmail = functions.https.onRequest((req,res) => {
+    cors (req,res, ()=> {
+    console.log(req.body.data.sendTo);
+
     var data = req.body.data
     var sendTo = data.sendTo.toString()
     var cc = data.CC.toString()
     var from = data.from
     var subject = data.subject
-    // send = sendEmailApp(sendto, cc, data.subject, data.from)
-    // if(send){
-    //     console.log("sent");
-    // }
-
+    
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    // console.log("req.body");
-    // const text = data.text
+    
     var mail = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
@@ -241,6 +230,8 @@ exports.sendmail = functions.https.onRequest((req,res) => {
             type: 'login',
             user: process.env.email,
             pass: process.env.pass
+            // user: process.env.emailBil,
+            // pass: process.env.passBil
         }
     });
 
@@ -251,7 +242,7 @@ exports.sendmail = functions.https.onRequest((req,res) => {
         subject: subject,
         text: 'Test nodemailer To : '+ sendTo +", CC to "+cc
     };
-    console.log(".....");
+    // console.log(".....");
     return mail.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log("error");
@@ -261,6 +252,7 @@ exports.sendmail = functions.https.onRequest((req,res) => {
             console.log('Email sent: ' + info.response);
             res.send({ data: 'Email sent' });
         }
+    })
     })
 
 })
