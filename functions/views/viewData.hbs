@@ -24,11 +24,41 @@
         body {
             background-color: #f1f2f6
         }
+
+        #fixed {
+            position: fixed;
+            width: 280px;
+            border-right: 2px groove white;
+        }
+
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (max-width: 768px) {
+            #fixed {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 1199px) {
+            #fixed {
+                width: 240px;
+            }
+        }
+
+        @media only screen and (max-width: 995px) {
+            #fixed {
+                width: 178px;
+            }
+        }
     </style>
 
 </head>
 
 <body>
+    <input type="text" style="display: none" id="userName" value="">
+    <input type="text" style="display: none" id="userEmail" value="">
     <div class="container">
         <h2 class="text-center">No SO : {{data.noSo}}</h2>
         <hr>
@@ -51,9 +81,19 @@
                 </ul>
             </div>
             <div class="col-md-3"></div>
-
         </div>
         <div class="tab-content" style="margin-top: 12px;">
+            <div id="fixed">
+                <label><b>No So : </b>{{data.noSo}}</label>
+                <br>
+                <label><b>Nama So :</b> {{data.namaSo}}</label>
+                <br>
+                <label><b>No Io :</b> {{data.noIo}}</label>
+                <br>
+                <label><b>No Ps :</b> {{data.noPs}}</label>
+                <br>
+                <label><b>Alamat :</b> {{data.alamat}}</label>
+            </div>
             <div class="tab-pane active" id="navPelanggan">
                 <div class="row">
                     <div class="col-md-3">
@@ -62,24 +102,30 @@
                         <form>
                             <div class="form-group">
                                 <label><b>Pelanggan :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="pelanggan"
+                                    value="{{data.Pelanggan.pelanggan}}">
                             </div>
 
                             <div class="form-group">
                                 <label><b>Alamat Originating :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="alamatOriginating"
+                                    value="{{data.Pelanggan.almtOri}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Alamat Terminating :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="alamatTerminating"
+                                    value="{{data.Pelanggan.almtTer}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Node Type :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="nodeType"
+                                    value="{{data.Pelanggan.nodeType}}">
                             </div>
+                            <button type="button" id="btnPelanggan" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                     <div class="col-md-3">
+
                     </div>
                 </div>
             </div>
@@ -91,53 +137,54 @@
                         <form>
                             <div class="form-group">
                                 <label><b>Nomor IO :</b></label>
-                                <input class="form-control" type="text" value="{{data.noIo}}" id="inputPelanggan">
+                                <input class="form-control" type="text" value="{{data.noIo}}" id="noIo" disabled>
                             </div>
 
                             <div class="form-group">
                                 <label><b>Status :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="status" value="{{data.Deskripsi.status}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Service ID :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="serviceId" value="{{data.Deskripsi.serviceId}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Tanggal SO Di Buat :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="tglSoDibuat" value="{{data.Deskripsi.tglSoDibuat}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Tanggal SO Di Dispos :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="tglSoDispos" value="{{data.Deskripsi.tglSoDispos}}">
                             </div>
                             <div class="form-group">
                                 <label><b>KHS :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="khs" value="{{data.Deskripsi.khs}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Target SO :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="targetSo" value="{{data.Deskripsi.targetSo}}">
+                            </div>
                             <div class="form-group">
                                 <label><b>Service :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="service" value="{{data.Deskripsi.service}}">
                             </div>
                             <div class="form-group">
                                 <label><b>Kapasitas :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="kapasitas" value="{{data.Deskripsi.kapasitas}}">
                             </div>
                             <div class="form-group">
                                 <label><b>PTL Pusat :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
+                                <input class="form-control" type="text" id="ptlPusat" value="{{data.Deskripsi.ptlPusat}}">
                             </div>
                             <div class="form-group">
                                 <label><b>PTL Regional :</b></label>
-                                <input class="form-control" type="text" id="inputPelanggan">
-                            </div>
+                                <input class="form-control" type="text" id="ptlRegional" value="{{data.Deskripsi.ptlRegional}}">
                             </div>
                             <div class="form-group">
                                 <label><b>PIC :</b></label>
-                                <input type="textarea" id="inputPelanggan">
+                                <input type="textarea" id="pic" value="{{data.Deskripsi.pic}}">
                             </div>
+                            <button type="button" id="btnDeskripsi" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                     <div class="col-md-3">
@@ -150,36 +197,37 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label><b>Tanggal TestComm :</b></label>
-                            <input class="form-control" type="text" id="inputPelanggan">
+                            <input class="form-control" type="text" id="tglTestcomm">
                         </div>
                         <div class="form-group">
                             <label><b>Upload BAI :</b></label>
-                            <input  type="file" id="inputPelanggan">
+                            <input type="file" id="bai">
                         </div>
                         <div class="form-group">
                             <label><b>File OTDR, FLOW, BOM :</b></label>
-                            <input  type="file" id="inputPelanggan">
+                            <input type="file" id="otdr">
                         </div>
                         <div class="form-group">
                             <label><b>File Dokumen :</b></label>
-                            <input  type="file" id="inputPelanggan">
+                            <input type="file" id="dokumen">
                         </div>
                         <div class="form-group">
                             <label><b>Input IMS:</b></label>
-                            <input  type="file" id="inputPelanggan">
+                            <input type="file" id="ims">
                         </div>
                         <div class="form-group">
                             <label><b>Penyerahan BAPS :</b></label>
-                            <input  type="file" id="inputPelanggan">
+                            <input type="file" id="baps">
                         </div>
                         <div class="form-group">
                             <label><b>Catatan Aset :</b></label>
-                            <input  type="textarea" id="inputPelanggan">
+                            <input type="textarea" id="catatanAset">
                         </div>
                         <div class="form-group">
                             <label><b>Keterangan :</b></label>
-                            <input class="form-control" type="textarea" id="inputPelanggan">
+                            <input class="form-control" type="textarea" id="keterangan">
                         </div>
+                        <button type="button" id="btnDokumen" class="btn btn-primary">Update</button>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
@@ -219,13 +267,92 @@
         firebase.initializeApp(firebaseConfig);
 
         // ===================================== testing for local ========================
-        firebase.functions().useFunctionsEmulator('http://localhost:5000')
+        //firebase.functions().useFunctionsEmulator('http://localhost:5000')
         // ===================================== testing for local ========================
 
         const db = firebase.firestore()
         const functions = firebase.functions()
 
+        function editDataPelanggan() {
+            db.collection("Data SO").doc('{{params}}').update({
+                Pelanggan: {
+                    pelanggan: $('#pelanggan').val(),
+                    almtOri: $('#alamatOriginating').val(),
+                    almtTer: $('#alamatTerminating').val(),
+                    nodeType: $('#nodeType').val()
+                }
+            }).then(() => {
+                alert("Update Success!")
+            }).catch((err) => {
+                console.log(err)
+                alert("Update Failed!")
+            })
+        }
+
+        function editDeskripsiSo() {
+            db.collection("Data SO").doc("{{params}}").update({
+                Deskripsi: {
+                    status: $('#status').val(),
+                    serviceId: $("#serviceId").val(),
+                    tglSoDibuat: $("#tglSoDibuat").val(),
+                    tglSoDispos: $("#tglSoDispos").val(),
+                    khs: $("#khs").val(),
+                    targetSo: $("#targetSo").val(),
+                    service: $("#service").val(),
+                    kapasitas: $("#kapasitas").val(),
+                    ptlPusat: $("#ptlPusat").val(),
+                    ptlRegional: $("#ptlRegional").val(),
+                    pic: $("#pic").val()
+                }
+            }).then(() => {
+                alert("Update Success!")
+            }).catch((err) => {
+                console.log(err)
+                alert("Update Failed!")
+            })
+        }
+
+        function editDokumen() {
+            
+        }
+        function history() {
+
+        }
+
         $(document).ready(() => {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var isAnonymous = user.isAnonymous;
+                    var uid = user.uid;
+                    var providerData = user.providerData;
+                    $('#userName').text(displayName);
+                    $('#userEmail').val(email);
+                    $('#userName').val(displayName);
+
+                    console.log(displayName + " Online")
+
+                } else {
+                    console.log(' Account Logout')
+                    $('body').hide()
+                    if (window.confirm('If you click "ok" you would be redirected to Login Page. Please Login First to view data!')) 
+                    {
+                    window.location.href='https://iconproject-f66b2.web.app';
+                    };
+                }
+            });
+            $('#btnPelanggan').on('click', () => {
+                editDataPelanggan()
+            })
+            $('#btnDeskripsi').on('click', () => {
+                editDeskripsiSo()
+            })
+
+        })
     </script>
 </body>
 

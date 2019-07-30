@@ -8,16 +8,18 @@ const path = require('path');
 var nodemailer = require('nodemailer');
 var directTransport = require('nodemailer-direct-transport');
 
-var serviceAccount = require("service-adminSDK.json");
+var serviceAccount = require("./iconproject-f66b2-firebase-adminsdk-fddzn-d35c016d01.json");
 
 
-const cors = require('cors')({origin: true});
+const cors = require('cors')({
+    origin: true
+});
 
 require('dotenv').config()
 
 const app = express();
 const test = express();
-// test.use(cors);
+// test.use(cors); 
 // app.use(cors);
 
 
@@ -122,10 +124,10 @@ var transporter = nodemailer.createTransport({
 });
 
 
-app.get("/home/email", (req,res) => {
+app.get("/home/email", (req, res) => {
     console.log(req.body.n);
     res.render('dasboard')
-}) 
+})
 // https://medium.com/@mariusc23/send-an-email-using-only-javascript-b53319616782
 //================SEND EMAIL========================
 
@@ -146,15 +148,14 @@ app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
     res.render('test', {
-        dataFb : cf
+        dataFb: cf
     })
 })
 
 app.get(`/home`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
     res.render('dasboard', {
-        dataFb: cf,
-        sendmail : transporter
+        dataFb: cf
     })
 })
 
@@ -163,40 +164,51 @@ app.get(`/app/home`, (req, res) => {
 
     res.render('dasboard', {
         dataFb: cf,
-        sendmail : transporter
+        sendmail: transporter
     })
 })
 
 
 app.get('/', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-    
+
     res.render('login.hbs', {
-        dataFb: cf,
-        sendmail : transporter
+        dataFb: cf
+    })
+})
+
+app.get('/login', (req, res) => {
+    res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
+
+    res.render('login.hbs', {
+        dataFb: cf
     })
 })
 
 app.get('/home/:id', (req, res) => {
-    cors(req,res, () => {
+    cors(req, res, () => {
         var data = "Data not Found"
         var ref = db.collection("Data SO").get()
         ref.then((docs) => {
-            docs.forEach((doc) => {  
-                if(doc.id == req.params.id){
+            docs.forEach((doc) => {
+                if (doc.id == req.params.id) {
                     data = doc.data();
                 }
             })
-            
-            res.render('viewData',{
-                data : data
-                })
+            console.log(data)
+            res.render('viewData', {
+                dataFb: cf,
+                data: data,
+                params : req.params.id
+            })
         }).catch((err) => {
             data = err;
             res.send(err)
         })
     })
 })
+
+
 
 app.get(`*`, (req, res) => {
     // res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
@@ -206,53 +218,54 @@ app.get(`*`, (req, res) => {
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 
-
-
 exports.app = functions.https.onRequest(app);
 
-exports.sendmail = functions.https.onRequest((req,res) => {
-    cors (req,res, ()=> {
-    console.log(req.body.data.sendTo);
+exports.sendmail = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body.data.sendTo);
 
-    var data = req.body.data
-    var sendTo = data.sendTo.toString()
-    var cc = data.CC.toString()
-    var from = data.from
-    var subject = data.subject
-    
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    
-    var mail = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            type: 'login',
-            user: process.env.email,
-            pass: process.env.pass
-            // user: process.env.emailBil,
-            // pass: process.env.passBil
-        }
-    });
+        var data = req.body.data
+        var sendTo = data.sendTo.toString()
+        var cc = data.CC.toString()
+        var from = data.from
+        var subject = data.subject
+        var link = data.link
 
-    var mailOptions = {
-        from: from,
-        to: sendTo,
-        cc: cc,
-        subject: subject,
-        text: 'Test nodemailer To : '+ sendTo +", CC to "+cc
-    };
-    // console.log(".....");
-    return mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log("error");
-            console.log(error);
-            res.send({ data: 'Error sent Email' });
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.send({ data: 'Email sent' });
-        }
-    })
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+        var mail = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                type: 'login',
+                user: process.env.email,
+                pass: process.env.pass
+            }
+        });
+
+        var mailOptions = {
+            from: from,
+            to: sendTo,
+            cc: cc,
+            subject: subject,
+            text: "Email from : " + from+". \n link dokumen : " +link
+        };
+        // console.log(".....");
+        return mail.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log("error");
+                console.log(error);
+                res.send({
+                    data: 'Error sent Email'
+                });
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.send({
+                    data: 'Email sent'
+                });
+            }
+        })
     })
 
 })

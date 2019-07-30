@@ -51,6 +51,14 @@
               position: fixed;
 
         }
+        #userNav {
+            margin-left: 50%
+        }
+        #imgUser:hover {
+            transition: 0.5s;
+            width: 100px;
+            height: 100px;
+        }
 
         /* Safari */
         @-webkit-keyframes spin {
@@ -89,13 +97,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#menu2">Admin Aset</a>
             </li>
+            <li class="nav-item"  id="userNav">
+                <img src="" alt="" id="imgUser" height="50" width="55" class="rounded">
+            </li>
             <li class="nav-item">
                 <label class="nav-link" id="userName"></label>
                 <input type="email" id="userEmail" style="display: none">
                 <input type="email" id="username" style="display: none">
             </li>
             <li class="nav-item">
-                <button class="nav-link" id="btnLogout">Logout</button>
+                <button type="submit" class="nav-link" id="btnLogout">Logout</button>
             </li>
         </ul>
 
@@ -270,8 +281,8 @@
 
                             <!-- Modal Header -->
                             <div class="modal-header">
-                                <h4 class="modal-title">DISPO DATA SO TO :<br> <label id="labelDispo"></label></h4>
-                                <input type="text" id="docDispoSo" style="display:none">
+                                <h4 class="modal-title">DISPO DATA SO TO :</h4>
+                                <input type="text" id="idDispo" style="display:none">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                             </div>
 
@@ -334,9 +345,10 @@
                     <thead>
                         <tr>
                             <th>No SO</th>
-                            <th>Nama SO</th>
                             <th>No PS</th>
                             <th>No IO</th>
+                            <th>Pelanggan</th>
+                            <th>Status</th>
                             <th>Alamat</th>
                             <th>Action</th>
                         </tr>
@@ -347,9 +359,10 @@
                     <tfoot>
                         <tr>
                             <th>No SO</th>
-                            <th>Nama SO</th>
                             <th>No PS</th>
                             <th>No IO</th>
+                            <th>Pelanggan</th>
+                            <th>Status</th>
                             <th>Alamat</th>
                             <th>Action</th>
                         </tr>
@@ -379,7 +392,7 @@
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
-            firebase.functions().useFunctionsEmulator('http://localhost:5000')
+            //firebase.functions().useFunctionsEmulator('http://localhost:5000')
 
             const db = firebase.firestore()
             const rdb = firebase.database()
@@ -410,15 +423,17 @@
                     "data-target": "#dispoDataSo"
                 })
 
-                view.addEventListener('click', (e) => {
+                dispo.addEventListener('click', (e) => {
                     var val = $(e.target.parentNode.parentNode).data('id')
-                    viewPageData(val)
+                    $("#idDispo").val(val)
+                    console.log($("#idDispo").val())
+
                 })
 
 
                 edit.addEventListener("click", (e) => {
                     var val = $(e.target.parentNode.parentNode).data('id')
-
+                    console.log(val)
                     db.collection("Data SO").doc(val).get()
                         .then((doc) => {
                             if (doc.exists) {
@@ -436,7 +451,6 @@
                             console.log(error)
                         })
                 })
-                //tr.addEventListener("click", getElm)
                 edit.textContent = "Edit";
                 view.textContent = "View";
                 dispo.textContent = "dispo";
@@ -454,6 +468,7 @@
 
                 //console.log(doc.id)
 
+                tr.setAttribute('data-id', doc.id)
                 view.setAttribute('href', window.location.href+'/'+doc.id)
                 tr.appendChild(noSo);
                 tr.appendChild(namaSo);
@@ -466,11 +481,12 @@
 
             function textContentAdminAktivasi(doc) {
                 var tr = document.createElement('tr');
-                var namaSo = document.createElement('td');
                 var noSo = document.createElement('td');
                 var noPs = document.createElement('td');
                 var noIo = document.createElement('td');
                 var alamat = document.createElement('td');
+                var pelanggan = document.createElement('td');
+                var status = document.createElement('td');
 
 
                 var span = document.createElement('td');
@@ -483,32 +499,24 @@
                 
                 //console.log(doc)
                 noSo.textContent = doc.data().noSo;
-                namaSo.textContent = doc.data().namaSo;
                 noPs.textContent = doc.data().noPs;
                 noIo.textContent = doc.data().noIo;
                 alamat.textContent = doc.data().alamat;
+                pelanggan.textContent = doc.data().Pelanggan.pelanggan;
+                status.textContent = doc.data().Deskripsi.status;
                 
 
                 //console.log(doc.id)
 
                 view.setAttribute('href', window.location.href+'/'+doc.id)
                 tr.appendChild(noSo);
-                tr.appendChild(namaSo);
                 tr.appendChild(noPs);
                 tr.appendChild(noIo);
+                tr.appendChild(pelanggan);
+                tr.appendChild(status);
                 tr.appendChild(alamat);
                 tr.appendChild(span);
                 listDataSoAdminAktivasi.appendChild(tr);
-            }
-
-            function viewPageData(id) {
-                var Promise = firebase.functions().httpsCallable('app/'+id)()
-                .then(() => {
-                    console.log("sukses")
-                }).catch((err) => {
-                    console.log('eror')
-                    console.log(err)
-                })
             }
 
             function getDataSo() {
@@ -516,7 +524,9 @@
                 db.collection('Data SO').get().then((docs) => {
                     docs.forEach((doc) => {
                         textContentSo(doc)
-                        textContentAdminAktivasi(doc)
+                        if((typeof doc.data().Pelanggan != "undefined") && (typeof doc.data().Deskripsi != "undefined")){
+                            textContentAdminAktivasi(doc)
+                        }
                         n++
                     })
                     $('#tabelDataSoPTL').DataTable({});
@@ -654,14 +664,15 @@
                     })
             }
 
-            function tmpEmail(arr, arrCC, subject, sender, username) {
+            function tmpEmail(arr, arrCC, subject, sender, username, link) {
                 var currentDate = new Date();
                 var time = new Date().toLocaleTimeString();
                 var date = currentDate.getDate();
                 var month = currentDate.getMonth();
                 var year = currentDate.getFullYear();
                 var monthDateYear = (month + 1) + "/" + date + "/" + year;
-
+                var link = window.location.href+'/'+link;
+                console.log(link)
                 var data = {
                     sendTo: arr,
                     CC: arrCC,
@@ -669,7 +680,8 @@
                     from: sender,
                     date: monthDateYear,
                     time: time,
-                    username: username
+                    username: username,
+                    link : link
                 }
                 sendEmail(data)
             }
@@ -705,6 +717,7 @@
                         var isAnonymous = user.isAnonymous;
                         var uid = user.uid;
                         var providerData = user.providerData;
+                        $('#imgUser').attr('src', photoURL)
                         $('#userName').text(displayName);
                         $('#userEmail').val(email);
                         $('#username').val(displayName);
@@ -713,6 +726,11 @@
 
                     } else {
                         console.log(' Account Logout')
+                        $('body').hide()
+                        if (window.confirm('If you click "ok" you would be redirected to Login Page. Please Login First to access this page!')) 
+                        {
+                        window.location.href='https://iconproject-f66b2.web.app';
+                        };
                     }
                 });
 
@@ -736,7 +754,8 @@
                     var subject = $("#textSubject").val();
                     var user = $('#userEmail').val();
                     var username = $('#username').val();
-                    tmpEmail(sendTo, cc, subject, user, username);
+                    var link = $('#idDispo').val();
+                    tmpEmail(sendTo, cc, subject, user, username,link);
                     
                 })
 
@@ -761,10 +780,19 @@
                         user.delete().then(function () {
                             // User deleted.
                             console.log("user deleted")
+                            firebase.functions().httpsCallable('./')()
+                            .then(() => {
+                                console.log("sukses")
+                            }).catch((err) => {
+                                console.log('eror')
+                                console.log(err)
+                            })
                         }).catch(function (error) {
                             // An error happened.
                         });
                         // Sign-out successful.
+
+                    window.location.href='https://iconproject-f66b2.web.app';
                         console.log("user logout")
                     }).catch(function (error) {
                         // An error happened.
