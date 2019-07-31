@@ -54,96 +54,6 @@ app.set('views', `./views`);
 app.set('view engine', `hbs`);
 
 
-// app.post('/collection', (req, res) => {
-//     db.collection("users").add({
-//             username: req.body.username,
-//             uid: req.body.uid
-//         })
-//         .then(function (docRef) {
-//             console.log("Document written with ID: ", docRef.uid);
-//         })
-//         .catch(function (error) {
-//             console.error("Error adding document: ", error);
-//     });
-//     res.render('test')
-
-// })
-
-
-
-
-//================SEND EMAIL========================
-
-
-app.get('/sendEmail', (req, res) => {
-    var data = req.body
-    var email = data.email
-    console.log(data.uid);
-    console.log('send email');
-    console.log(process.env.pass);
-
-
-    var transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            type: 'login',
-            user: process.env.email,
-            pass: process.env.pass
-
-        }
-    });
-
-    var mailOptions = {
-        from: 'bilaarta@gmail.com',
-        to: 'bilaartawirawan@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    })
-})
-
-var transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        type: 'login',
-        user: process.env.email,
-        pass: process.env.pass
-
-    }
-});
-
-
-app.get("/home/email", (req, res) => {
-    console.log(req.body.n);
-    res.render('dasboard')
-})
-// https://medium.com/@mariusc23/send-an-email-using-only-javascript-b53319616782
-//================SEND EMAIL========================
-
-//================input data========================
-app.post('/addSo', (req, res) => {
-    var data = req.body
-    console.log(data);
-    res.render('dasboard', {
-        title: 'dataSO',
-        data: data
-    })
-})
-
-
-//================input data========================
-
 app.get(`/test`, (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
@@ -159,25 +69,8 @@ app.get(`/home`, (req, res) => {
     })
 })
 
-app.get(`/app/home`, (req, res) => {
-    res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-
-    res.render('dasboard', {
-        dataFb: cf,
-        sendmail: transporter
-    })
-})
-
 
 app.get('/', (req, res) => {
-    res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
-
-    res.render('login.hbs', {
-        dataFb: cf
-    })
-})
-
-app.get('/login', (req, res) => {
     res.set('Cache-Control', `public, max-age=300 s-maxage=600`);
 
     res.render('login.hbs', {
@@ -262,7 +155,8 @@ exports.sendmail = functions.https.onRequest((req, res) => {
             } else {
                 console.log('Email sent: ' + info.response);
                 res.send({
-                    data: 'Email sent'
+                    data: 'Email sent',
+                    doc: data.doc
                 });
             }
         })

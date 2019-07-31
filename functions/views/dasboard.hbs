@@ -48,12 +48,18 @@
             -webkit-animation: spin 2s linear infinite;
             /* Safari */
             animation: spin 2s linear infinite;
-              position: fixed;
+            position: fixed;
 
         }
+
         #userNav {
-            margin-left: 50%
+            margin-left: 20%;
         }
+
+        .log {
+            margin: 4px;
+        }
+
         #imgUser:hover {
             transition: 0.5s;
             width: 100px;
@@ -97,7 +103,22 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#menu2">Admin Aset</a>
             </li>
-            <li class="nav-item"  id="userNav">
+            <li class="nav-item log" id="userNav">
+                <button type="button" class="btn btn-success btn-md">
+                    New <span class="badge badge-light">4</span>
+                </button>
+            </li>
+            <li class="nav-item log">
+                <button type="button" class="btn btn-primary btn-md">
+                    In-Progress <span class="badge badge-light">4</span>
+                </button>
+            </li>
+            <li class="nav-item log">
+                <button type="button" class="btn btn-secondary btn-md">
+                    Finish <span class="badge badge-light">4</span>
+                </button>
+            </li>
+            <li class="nav-item log">
                 <img src="" alt="" id="imgUser" height="50" width="55" class="rounded">
             </li>
             <li class="nav-item">
@@ -297,7 +318,7 @@
                                             <button type="button" id="btnAddEmail">Add Email</button>
                                         </div>
                                     </div>
-                    {{!-- loader ================ --}}
+                                    {{!-- loader ================ --}}
                                     <div class="loader" id="loader"></div>
                                     <div class="form-group">
                                         <label><b>Send Email to :</b></label>
@@ -341,7 +362,7 @@
                 </div>
                 <hr>
                 <table id="tabelDataSoAdminAktivasi" class="display" style="width:100%">
-                    
+
                     <thead>
                         <tr>
                             <th>No SO</th>
@@ -392,7 +413,7 @@
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
-            //firebase.functions().useFunctionsEmulator('http://localhost:5000')
+            firebase.functions().useFunctionsEmulator('http://localhost:5000')
 
             const db = firebase.firestore()
             const rdb = firebase.database()
@@ -417,7 +438,7 @@
                     "data-toggle": "modal",
                     "data-target": "#editDataSo"
                 })
-                
+
                 $(dispo).attr({
                     "data-toggle": "modal",
                     "data-target": "#dispoDataSo"
@@ -427,7 +448,10 @@
                     var val = $(e.target.parentNode.parentNode).data('id')
                     $("#idDispo").val(val)
                     console.log($("#idDispo").val())
-
+                })
+                dispo.addEventListener('click', (e) => {
+                    var val = $(e.target.parentNode.parentNode).data('id')
+                    //ViewPage(val)
                 })
 
 
@@ -464,12 +488,12 @@
                 noPs.textContent = doc.data().noPs;
                 noIo.textContent = doc.data().noIo;
                 alamat.textContent = doc.data().alamat;
-                
+
 
                 //console.log(doc.id)
 
                 tr.setAttribute('data-id', doc.id)
-                view.setAttribute('href', window.location.href+'/'+doc.id)
+                view.setAttribute('href', window.location.href + '/' + doc.id)
                 tr.appendChild(noSo);
                 tr.appendChild(namaSo);
                 tr.appendChild(noPs);
@@ -477,6 +501,10 @@
                 tr.appendChild(alamat);
                 tr.appendChild(span);
                 listDataSoPTL.appendChild(tr);
+            }
+
+            function ViewPage(doc) {
+                return firebase.functions().httpsCallable('app/home/' + doc)
             }
 
             function textContentAdminAktivasi(doc) {
@@ -492,11 +520,11 @@
                 var span = document.createElement('td');
                 var view = document.createElement('a');
                 $(view).addClass('btn btn-primary btn-sm')
-                
+
                 view.textContent = "Update";
-                
+
                 span.appendChild(view)
-                
+
                 //console.log(doc)
                 noSo.textContent = doc.data().noSo;
                 noPs.textContent = doc.data().noPs;
@@ -504,11 +532,11 @@
                 alamat.textContent = doc.data().alamat;
                 pelanggan.textContent = doc.data().Pelanggan.pelanggan;
                 status.textContent = doc.data().Deskripsi.status;
-                
+
 
                 //console.log(doc.id)
 
-                view.setAttribute('href', window.location.href+'/'+doc.id)
+                view.setAttribute('href', window.location.href + '/' + doc.id)
                 tr.appendChild(noSo);
                 tr.appendChild(noPs);
                 tr.appendChild(noIo);
@@ -524,7 +552,8 @@
                 db.collection('Data SO').get().then((docs) => {
                     docs.forEach((doc) => {
                         textContentSo(doc)
-                        if((typeof doc.data().Pelanggan != "undefined") && (typeof doc.data().Deskripsi != "undefined")){
+                        if ((typeof doc.data().Pelanggan != "undefined") && (typeof doc.data()
+                                .Deskripsi != "undefined")) {
                             textContentAdminAktivasi(doc)
                         }
                         n++
@@ -538,14 +567,23 @@
             function createElmCheckBox(doc, n, id) {
                 var input = document.createElement('input')
                 var label = document.createElement('label')
+                var x = document.createElement('button')
                 var span = document.createElement('span')
-
+                $(x).addClass('btn btn-danger btn-sm')
+                x.textContent = 'x'
                 $(span).css({
-                    'margin': 12,
+                    'margin': 8,
                     'font-size': 16
                 })
-                $(input).css('margin', 8)
-                $(label).css('width', 320)
+                $(label).css('width', 280)
+                $(x).css({
+                    'font-size': 12,
+                    'padding' : 2
+                })
+                $(input).css({
+                    'margin-right': 24,
+                    'margin-top': 8
+                    })
 
                 $(input).attr('type', 'checkbox')
                 if (id == "#checkboxs") {
@@ -556,9 +594,23 @@
                 $(input).val(doc.data().email)
                 label.textContent = doc.data().email
 
+                x.addEventListener('click', (e) => {
+                    var val = $(e.target.parentNode).data('id')
+                    if (confirm("Are u sure Delete this item?")) {
+                        db.collection('email').doc(val).delete()
+                            .then(() => {
+                                console.log("Delete success")
+                                window.location.replace(window.location.href)
+                            }).catch((err) => {
+                                console.log(err)
+                            })
+                    }
+                })
+
                 $(span).append(label)
                 $(span).append(input)
-                var span2 = span
+                $(span).append(x)
+                $(span).attr('data-id', doc.id)
                 $(id).append(span)
 
                 if (n % 2 == 0) {
@@ -649,7 +701,8 @@
                                     namaSo: namaSo,
                                     noIo: noIo,
                                     noPs: noPs,
-                                    alamat: alamat
+                                    alamat: alamat,
+                                    createdBy: $('#username').val() + '-' + $('#userEmail')
                                 })
                                 .then(function () {
                                     alert("Document successfully written!");
@@ -671,7 +724,7 @@
                 var month = currentDate.getMonth();
                 var year = currentDate.getFullYear();
                 var monthDateYear = (month + 1) + "/" + date + "/" + year;
-                var link = window.location.href+'/'+link;
+                var href = window.location.href + '/' + link;
                 console.log(link)
                 var data = {
                     sendTo: arr,
@@ -681,7 +734,8 @@
                     date: monthDateYear,
                     time: time,
                     username: username,
-                    link : link
+                    link: href,
+                    doc: link
                 }
                 sendEmail(data)
             }
@@ -689,7 +743,6 @@
             function sendEmail(data) {
                 firebase.functions().httpsCallable('sendmail')(data).then(function (result) {
                     // Read result of the Cloud Function
-                    console.log(result.data)
                     alert(result.data)
                     $("#loader").hide()
                     //console.log(result.data.text)
@@ -721,15 +774,16 @@
                         $('#userName').text(displayName);
                         $('#userEmail').val(email);
                         $('#username').val(displayName);
-                        
+
                         console.log(displayName + " Online")
 
                     } else {
                         console.log(' Account Logout')
                         $('body').hide()
-                        if (window.confirm('If you click "ok" you would be redirected to Login Page. Please Login First to access this page!')) 
-                        {
-                        window.location.href='https://iconproject-f66b2.web.app';
+                        if (window.confirm(
+                                'If you click "ok" you would be redirected to Login Page. Please Login First to access this page!'
+                                )) {
+                            window.location.href = 'https://iconproject-f66b2.web.app';
                         };
                     }
                 });
@@ -755,8 +809,8 @@
                     var user = $('#userEmail').val();
                     var username = $('#username').val();
                     var link = $('#idDispo').val();
-                    tmpEmail(sendTo, cc, subject, user, username,link);
-                    
+                    tmpEmail(sendTo, cc, subject, user, username, link);
+
                 })
 
                 getDataSo()
@@ -781,18 +835,18 @@
                             // User deleted.
                             console.log("user deleted")
                             firebase.functions().httpsCallable('./')()
-                            .then(() => {
-                                console.log("sukses")
-                            }).catch((err) => {
-                                console.log('eror')
-                                console.log(err)
-                            })
+                                .then(() => {
+                                    console.log("sukses")
+                                }).catch((err) => {
+                                    console.log('eror')
+                                    console.log(err)
+                                })
                         }).catch(function (error) {
                             // An error happened.
                         });
                         // Sign-out successful.
 
-                    window.location.href='https://iconproject-f66b2.web.app';
+                        window.location.href = 'https://iconproject-f66b2.web.app';
                         console.log("user logout")
                     }).catch(function (error) {
                         // An error happened.

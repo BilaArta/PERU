@@ -31,6 +31,14 @@
             border-right: 2px groove white;
         }
 
+        .form-group .file {
+            width: 300px;
+            height: 40px;
+        }
+        .form-group #labelFile {
+            width: 200px;
+        }
+
 
         /* Small devices (portrait tablets and large phones, 600px and up) */
 
@@ -93,6 +101,8 @@
                 <label><b>No Ps :</b> {{data.noPs}}</label>
                 <br>
                 <label><b>Alamat :</b> {{data.alamat}}</label>
+                <br>
+                <label><b>PTL :</b> Username PTL</label>
             </div>
             <div class="tab-pane active" id="navPelanggan">
                 <div class="row">
@@ -141,8 +151,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label><b>Status :</b></label>
-                                <input class="form-control" type="text" id="status" value="{{data.Deskripsi.status}}">
+
+                                    <label><b>Status :</b></label>
+                                    <select name="status" class="form-control">
+                                        <option value="{{data.Deskripsi.status}}">-{{data.Deskripsi.status}}-</option>
+                                        <option  value="New">New</option>
+                                        <option  value="In-Progress">In-Progress</option>
+                                        <option  value="Finish">Finish</option>
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label><b>Service ID :</b></label>
@@ -200,32 +216,32 @@
                             <input class="form-control" type="text" id="tglTestcomm">
                         </div>
                         <div class="form-group">
-                            <label><b>Upload BAI :</b></label>
-                            <input type="file" id="bai">
+                            <label id="labelFile"><b>Upload BAI :</b></label>
+                            <input class="file" type="file" id="bai">
                         </div>
                         <div class="form-group">
-                            <label><b>File OTDR, FLOW, BOM :</b></label>
-                            <input type="file" id="otdr">
+                            <label id="labelFile"><b>File OTDR, FLOW, BOM :</b></label>
+                            <input type="file" class="file" id="otdr">
                         </div>
                         <div class="form-group">
-                            <label><b>File Dokumen :</b></label>
-                            <input type="file" id="dokumen">
+                            <label id="labelFile"><b>File Dokumen :</b></label>
+                            <input type="file" class="file" id="dokumen">
                         </div>
                         <div class="form-group">
-                            <label><b>Input IMS:</b></label>
-                            <input type="file" id="ims">
+                            <label id="labelFile"><b>Input IMS:</b></label>
+                            <input type="file" class="file" id="ims">
                         </div>
                         <div class="form-group">
-                            <label><b>Penyerahan BAPS :</b></label>
-                            <input type="file" id="baps">
+                            <label id="labelFile"><b>Penyerahan BAPS :</b></label>
+                            <input type="file" class="file" id="baps">
                         </div>
                         <div class="form-group">
                             <label><b>Catatan Aset :</b></label>
-                            <input type="textarea" id="catatanAset">
+                            <textarea class="form-control" id="catatanAset" rows="4" cols="50"></textarea>
                         </div>
                         <div class="form-group">
                             <label><b>Keterangan :</b></label>
-                            <input class="form-control" type="textarea" id="keterangan">
+                            <textarea id="keterangan" class="form-control" rows="4" cols="50"></textarea>
                         </div>
                         <button type="button" id="btnDokumen" class="btn btn-primary">Update</button>
                     </div>
@@ -235,8 +251,7 @@
             <div class="tab-pane" id="navHistory">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>History</h2>
-                        <hr>
+                        
                     </div>
                 </div>
             </div>
@@ -267,7 +282,7 @@
         firebase.initializeApp(firebaseConfig);
 
         // ===================================== testing for local ========================
-        //firebase.functions().useFunctionsEmulator('http://localhost:5000')
+        firebase.functions().useFunctionsEmulator('http://localhost:5000')
         // ===================================== testing for local ========================
 
         const db = firebase.firestore()
